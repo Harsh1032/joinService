@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .underline-effect {
+  position: relative;
+  text-decoration: none;
+}
+
+.underline-effect::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s ease-in-out;
+}
+
+.underline-effect:hover::after {
+  transform: scaleX(1);
+} */
+
+.square {
+  list-style-type: square;
+  color: #0349A9E3;
+}
+
+@font-face {
+  font-family: 'Bagoss Regular'; /* Replace with the actual font name */
+  src: url('/fonts/BagossStandardTRIAL-Regular.woff2') format('woff2'),
+       url('/fonts/BagossStandardTRIAL-Regular.woff') format('woff'),
+       url('/fonts/BagossStandardTRIAL-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Bagoss Medium';
+  src: url('/fonts/BagossStandardTRIAL-Medium.woff2') format('woff2'),
+       url('/fonts/BagossStandardTRIAL-Medium.woff') format('woff'),
+       url('/fonts/BagossStandardTRIAL-Medium.ttf') format('truetype');
+  font-weight: 500; /* Medium */
+  font-style: medium;
+}
+
+@font-face {
+  font-family: 'Bagoss SemiBold';
+  src: url('/fonts/BagossStandardTRIAL-SemiBold.woff2') format('woff2'),
+       url('/fonts/BagossStandardTRIAL-SemiBold.woff') format('woff'),
+       url('/fonts/BagossStandardTRIAL-SemiBold.ttf') format('truetype');
+  font-weight: 600; /* SemiBold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Bagoss Bold';
+  src: url('/fonts/BagossStandardTRIAL-Bold.woff2') format('woff2'),
+       url('/fonts/BagossStandardTRIAL-Bold.woff') format('woff'),
+       url('/fonts/BagossStandardTRIAL-Bold.ttf') format('truetype');
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
+/* Apply font globally */
+body {
+  @apply font-bagoss;
+}
