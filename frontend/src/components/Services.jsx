@@ -6,7 +6,12 @@ import { io } from "socket.io-client";
 
 const baseurl = import.meta.env.VITE_BASE_URL;
 // Establish Socket.io connection
-const socket = io(baseurl, { transports: ["websocket"] });
+const socket = io(baseurl, {
+  transports: ["websocket"], // Force WebSocket (avoid polling)
+  reconnection: true, // Auto-reconnect
+  reconnectionAttempts: 5, // Number of times to retry before failing
+  reconnectionDelay: 3000, // Wait before retrying
+});
 
 const options = [
   { value: "provider1", label: "Provider 1" },
@@ -36,23 +41,31 @@ const Services = () => {
   
       getApplicants();
   
-      // Listen for real-time updates when an applicant is approved
-      socket.on("applicationUpdated", async (updatedApplicant) => {
-        if (updatedApplicant.approvalStatus === "Approved") {
-          setApplicants((prevApplicants) => {
-            // Check if applicant already exists, if not add it
-            const isExisting = prevApplicants.some(
-              (app) => app._id === updatedApplicant._id
-            );
-            return isExisting ? prevApplicants : [...prevApplicants, updatedApplicant];
-          });
-        }
-      });
-  
-      return () => {
-        socket.off("applicationUpdated");
-      };
-    }, []);
+     // Listen for real-time updates when an applicant is approved
+    socket.on("applicationUpdated", (updatedApplicant) => {
+      if (updatedApplicant.approvalStatus === "Approved") {
+        setApplicants((prevApplicants) => {
+          const isExisting = prevApplicants.some(
+            (app) => app._id === updatedApplicant._id
+          );
+          return isExisting
+            ? prevApplicants
+            : [...prevApplicants, updatedApplicant];
+        });
+        toast.success(`Application approved: ${updatedApplicant.fullName}`);
+      }
+    });
+
+    // Handle WebSocket disconnections
+    socket.on("disconnect", () => {
+      console.warn("WebSocket disconnected. Attempting to reconnect...");
+    });
+
+    return () => {
+      socket.off("applicationUpdated");
+      socket.off("disconnect");
+    };
+  }, []);
 
   return (
     <div className="w-full min-h-screen py-5">

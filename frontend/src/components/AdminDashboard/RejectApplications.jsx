@@ -7,7 +7,12 @@ import { io } from "socket.io-client";
 // Create a socket connection
 
 const baseurl = import.meta.env.VITE_BASE_URL;
-const socket = io(baseurl, { transports: ["websocket"] });
+const socket = io(baseurl, {
+  transports: ["websocket"], // Force WebSocket (avoid polling)
+  reconnection: true, // Auto-reconnect
+  reconnectionAttempts: 5, // Number of times to retry before failing
+  reconnectionDelay: 3000, // Wait before retrying
+});
 
 // Assume this function fetches the list of applicants from an API
 const fetchApplicants = async () => {
@@ -34,28 +39,40 @@ const RejectApplications = () => {
   
     getApplicants();
   
-    socket.on("newApplicant", (newApplicant) => {
-      setApplicants((prev) => [...prev, newApplicant]);
+   // Handle new applicant event
+  socket.on("newApplicant", (newApplicant) => {
+    console.log("New applicant received:", newApplicant);
+    setApplicants((prev) => [...prev, newApplicant]);
+    toast.success(`New applicant added: ${newApplicant.fullName}`);
+  });
+
+  // Handle application update event
+  socket.on("applicationUpdated", (updatedApplicant) => {
+    console.log("Applicant updated:", updatedApplicant);
+    setApplicants((prevApplicants) => {
+      const updatedList = prevApplicants.filter(
+        (app) => app._id !== updatedApplicant._id
+      );
+
+      // Ensure the current index is valid
+      setCurrentApplicantIndex(updatedList.length > 0 ? 0 : -1);
+      return updatedList;
     });
-  
-    socket.on("applicationUpdated", (updatedApplicant) => {
-  
-      setApplicants((prevApplicants) => {
-        const updatedList = prevApplicants.filter(
-          (app) => app._id !== updatedApplicant._id
-        );
-  
-        // Ensure current index is valid
-        setCurrentApplicantIndex(updatedList.length > 0 ? 0 : -1);
-        return updatedList;
-      });
-    });
-  
-    return () => {
-      socket.off("newApplicant");
-      socket.off("applicationUpdated");
-    };
-  }, []);
+    toast.success(`Application updated: ${updatedApplicant.fullName}`);
+  });
+
+  // Handle WebSocket disconnections
+  socket.on("disconnect", () => {
+    console.warn("WebSocket disconnected. Attempting to reconnect...");
+  });
+
+  // Cleanup event listeners on unmount
+  return () => {
+    socket.off("newApplicant");
+    socket.off("applicationUpdated");
+    socket.off("disconnect");
+  };
+}, []);
 
 
   const handleAction = async (actionType) => {

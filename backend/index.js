@@ -1,43 +1,54 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv').config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv").config();
 const http = require("http"); // Required for socket.io
 const { Server } = require("socket.io");
 
-const applicantRoutes = require('./routes/routes'); 
+const applicantRoutes = require("./routes/routes");
 
 const app = express();
 const server = http.createServer(app);
+
+// 🔹 **CORS Configuration** (Define before using `cors()`)
+const corsOptions = {
+  origin: ["https://celebrated-granita-06a2ae.netlify.app"], // Netlify frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Allow credentials
+};
+
+// 🔹 **Apply Middleware**
+app.use(cors(corsOptions)); // CORS should come before defining routes
+app.use(express.json()); // Ensure JSON parsing is set up
+
+// 🔹 **Initialize WebSocket Server**
 const io = new Server(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  },
+  cors: corsOptions, // Ensure proper CORS for WebSocket
 });
 
-// Store `io` instance in the Express app
+// 🔹 **Store `io` instance in Express app (For future use)**
 app.set("io", io);
 
-// MongoDB Connection
+// 🔹 **MongoDB Connection**
 const mongoURL = process.env.MONGO_URL;
-mongoose.connect(mongoURL)
-  .then(() => console.log("Database connected"))
-  .catch((err) => console.log("Database not connected", err));
+mongoose
+  .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true }) // Ensure MongoDB best practices
+  .then(() => console.log("✅ Database connected"))
+  .catch((err) => console.error("❌ Database connection failed:", err));
 
-app.use(express.json());
-app.use(cors());
+// 🔹 **Use Routes (AFTER MIDDLEWARE & DB Connection)**
+app.use("/api/applicants", applicantRoutes);
 
-// Use the routes
-app.use('/api/applicants', applicantRoutes);
-
-// Handle socket connection
+// 🔹 **WebSocket Connection**
 io.on("connection", (socket) => {
-  console.log("Client connected:", socket.id);
+  console.log("🔗 Client connected:", socket.id);
+
   socket.on("disconnect", () => {
-    console.log("Client disconnected:", socket.id);
+    console.log("❌ Client disconnected:", socket.id);
   });
 });
 
+// 🔹 **Start Server**
 const port = process.env.PORT || 8000;
-server.listen(port, () => console.log(`Server is running on port ${port}`));
+server.listen(port, () => console.log(`🚀 Server is running on port ${port}`));

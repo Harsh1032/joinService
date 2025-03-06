@@ -101,13 +101,24 @@ const JoinServices = () => {
 
   const baseurl = import.meta.env.VITE_BASE_URL;
   // Ensure a single socket connection (outside component to prevent multiple connections)
-  const socket = io(baseurl, { transports: ["websocket"] });
+  const socket = io(baseurl, {
+    transports: ["websocket", "polling"], 
+    withCredentials: true, // Ensure proper CORS handling
+  });
+  
   useEffect(() => {
-    // Listen for new applicant events from the backend
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket:", socket.id);
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("WebSocket Disconnected!");
+    });
+  
     socket.on("newApplicant", (newApplicant) => {
       console.log("New applicant received in real-time:", newApplicant);
     });
-
+  
     return () => {
       socket.off("newApplicant");
     };
