@@ -52,8 +52,6 @@ const JoinServices = () => {
   const indemnityInsuranceInputRef = useRef(null);
   const profilePhotoInputRef = useRef(null);
 
-  console.log(formData);
-  console.log(files);
 
   // Handle input change
   const handleInputChange = (e) => {

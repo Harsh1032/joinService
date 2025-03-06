@@ -54,7 +54,6 @@ const Services = () => {
       };
     }, []);
 
-    console.log(applicants)
   return (
     <div className="w-full min-h-screen py-5">
       <h1 className="font-medium lg:text-6xl text-2xl my-10 w-full text-center">
