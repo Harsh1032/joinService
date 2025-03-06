@@ -10,9 +10,9 @@ const applicantRoutes = require("./routes/routes");
 const app = express();
 const server = http.createServer(app);
 
-// 🔹 **CORS Configuration** (Define before using `cors()`)
+//**CORS Configuration** (Define before using `cors()`)
 const corsOptions = {
-  origin: ["https://celebrated-granita-06a2ae.netlify.app"], // Netlify frontend URL
+  origin: ["https://celebrated-granita-06a2ae.netlify.app"], //   http://localhost:5173
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // Allow credentials

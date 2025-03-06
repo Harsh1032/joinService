@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import Select from "react-select";
-import { CloudUpload, Loader2 } from "lucide-react";
+import { CloudUpload, Loader2, X } from "lucide-react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { io } from "socket.io-client";
@@ -52,7 +52,6 @@ const JoinServices = () => {
   const indemnityInsuranceInputRef = useRef(null);
   const profilePhotoInputRef = useRef(null);
 
-
   // Handle input change
   const handleInputChange = (e) => {
     setFormData({
@@ -99,26 +98,42 @@ const JoinServices = () => {
     </div>
   );
 
+  // ✅ Common function to remove any file
+  const removeFile = (field) => {
+    setFiles((prevFiles) => ({
+      ...prevFiles,
+      [field]: { file: null, progress: 0 },
+    }));
+
+    // Reset input field
+    if (field === "medicalLicense") medicalLicenseRef.current.value = "";
+    if (field === "geriatricCertification")
+      geriatricCertificationRef.current.value = "";
+    if (field === "indemnityInsurance")
+      indemnityInsuranceRef.current.value = "";
+    if (field === "profilePhoto") profilePhotoRef.current.value = "";
+  };
+
   const baseurl = import.meta.env.VITE_BASE_URL;
   // Ensure a single socket connection (outside component to prevent multiple connections)
   const socket = io(baseurl, {
-    transports: ["websocket", "polling"], 
+    transports: ["websocket", "polling"],
     withCredentials: true, // Ensure proper CORS handling
   });
-  
+
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to WebSocket:", socket.id);
     });
-  
+
     socket.on("disconnect", () => {
       console.log("WebSocket Disconnected!");
     });
-  
+
     socket.on("newApplicant", (newApplicant) => {
       console.log("New applicant received in real-time:", newApplicant);
     });
-  
+
     return () => {
       socket.off("newApplicant");
     };
@@ -169,10 +184,12 @@ const JoinServices = () => {
       } else {
         // Handle failure
         toast.error("Failed to submit the application.");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error submitting application:", error);
       toast.error("Error submitting the application.");
+      setLoading(false);
     }
   };
 
@@ -590,12 +607,18 @@ const JoinServices = () => {
                 )}
               </div>
             </div>
-            <div className="flex items-center px-5 py-2 rounded-[4px] justify-between bg-[#E6E6E6] border border-[#CDCDCD]">
-              <span className="text-[#000000AD] text-lg font-medium">
-                File Name Lorem Ipsum (27 MB)
-              </span>
-              <span className="text-[#000000AD] text-lg font-medium">X</span>
-            </div>
+            {/* File Info Box (only appears after upload) */}
+            {files.medicalLicense.file &&
+              files.medicalLicense.progress === 100 && (
+                <div className="flex items-center px-5 py-2 rounded-[4px] justify-between bg-[#E6E6E6] border border-[#CDCDCD]">
+                  <span className="text-[#000000AD] text-lg font-medium">
+                    {files.medicalLicense.file.name}
+                  </span>
+                  <button onClick={() => removeFile("medicalLicense")}>
+                    <X className="text-[#000000AD] size-6 cursor-pointer" />
+                  </button>
+                </div>
+              )}
           </div>
           <div className="flex flex-col gap-y-4 max-lg:w-[90%] max-lg:mx-auto">
             <div className="flex flex-col gap-y-2">
@@ -641,6 +664,18 @@ const JoinServices = () => {
                 )}
               </div>
             </div>
+            {/* File Info Box (only appears after upload) */}
+            {files.geriatricCertification.file &&
+              files.geriatricCertification.progress === 100 && (
+                <div className="flex items-center px-5 py-2 rounded-[4px] justify-between bg-[#E6E6E6] border border-[#CDCDCD]">
+                  <span className="text-[#000000AD] text-lg font-medium">
+                    {files.geriatricCertification.file.name}
+                  </span>
+                  <button onClick={() => removeFile("geriatricCertification")}>
+                    <X className="text-[#000000AD] size-6 cursor-pointer" />
+                  </button>
+                </div>
+              )}
           </div>
           <div className="flex flex-col gap-y-4 max-lg:w-[90%] max-lg:mx-auto">
             <div className="flex flex-col gap-y-2">
@@ -682,6 +717,18 @@ const JoinServices = () => {
                 )}
               </div>
             </div>
+             {/* File Info Box (only appears after upload) */}
+             {files.indemnityInsurance.file &&
+              files.indemnityInsurance.progress === 100 && (
+                <div className="flex items-center px-5 py-2 rounded-[4px] justify-between bg-[#E6E6E6] border border-[#CDCDCD]">
+                  <span className="text-[#000000AD] text-lg font-medium">
+                    {files.indemnityInsurance.file.name}
+                  </span>
+                  <button onClick={() => removeFile("indemnityInsurance")}>
+                    <X className="text-[#000000AD] size-6 cursor-pointer" />
+                  </button>
+                </div>
+              )}
           </div>
           <div className="flex flex-col gap-y-4 max-lg:w-[90%] max-lg:mx-auto">
             <div className="flex flex-col gap-y-2">
@@ -723,6 +770,18 @@ const JoinServices = () => {
                 )}
               </div>
             </div>
+             {/* File Info Box (only appears after upload) */}
+             {files.profilePhoto.file &&
+              files.profilePhoto.progress === 100 && (
+                <div className="flex items-center px-5 py-2 rounded-[4px] justify-between bg-[#E6E6E6] border border-[#CDCDCD]">
+                  <span className="text-[#000000AD] text-lg font-medium">
+                    {files.profilePhoto.file.name}
+                  </span>
+                  <button onClick={() => removeFile("profilePhoto")}>
+                    <X className="text-[#000000AD] size-6 cursor-pointer" />
+                  </button>
+                </div>
+              )}
           </div>
           <button
             type="submit"
