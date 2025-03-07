@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 //**CORS Configuration** (Define before using `cors()`)
 const corsOptions = {
-  origin: ["http://localhost:5173"], //   https://celebrated-granita-06a2ae.netlify.app
+  origin: ["http://localhost:5173", "https://celebrated-granita-06a2ae.netlify.app"], //   https://celebrated-granita-06a2ae.netlify.app
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // Allow credentials
