@@ -24,6 +24,14 @@ const options4 = [
   { value: "Telehealth", label: "Telehealth" },
 ];
 
+
+const baseurl = import.meta.env.VITE_BASE_URL;
+// Ensure a single socket connection (outside component to prevent multiple connections)
+const socket = io(baseurl, {
+  transports: ["websocket", "polling"],
+  withCredentials: true, // Ensure proper CORS handling
+});
+
 const JoinServices = () => {
   // State to manage form fields and files
   const [formData, setFormData] = useState({
@@ -106,20 +114,13 @@ const JoinServices = () => {
     }));
 
     // Reset input field
-    if (field === "medicalLicense") medicalLicenseRef.current.value = "";
+    if (field === "medicalLicense") medicalLicenseInputRef.current.value = "";
     if (field === "geriatricCertification")
-      geriatricCertificationRef.current.value = "";
+      geriatricCertificationInputRef.current.value = "";
     if (field === "indemnityInsurance")
-      indemnityInsuranceRef.current.value = "";
-    if (field === "profilePhoto") profilePhotoRef.current.value = "";
+      indemnityInsuranceInputRef.current.value = "";
+    if (field === "profilePhoto") profilePhotoInputRef.current.value = "";
   };
-
-  const baseurl = import.meta.env.VITE_BASE_URL;
-  // Ensure a single socket connection (outside component to prevent multiple connections)
-  const socket = io(baseurl, {
-    transports: ["websocket", "polling"],
-    withCredentials: true, // Ensure proper CORS handling
-  });
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -174,7 +175,7 @@ const JoinServices = () => {
 
       if (response.data.success) {
         // Emit an event to the server via Socket.io after successful submission
-        socket.emit("newApplicant", response.data.applicant);
+        // socket.emit("newApplicant", response.data.applicant);
         // Handle successful submission
         toast.success("Application submitted successfully!");
         // Reset everything after successful submission

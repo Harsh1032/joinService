@@ -3,7 +3,6 @@ import MaxWidthWrapper from "./MaxWidthWrapper";
 import Select from "react-select";
 import { io } from "socket.io-client";
 
-
 const baseurl = import.meta.env.VITE_BASE_URL;
 // Establish Socket.io connection
 const socket = io(baseurl, {
@@ -14,9 +13,8 @@ const socket = io(baseurl, {
 });
 
 const options = [
-  { value: "provider1", label: "Provider 1" },
-  { value: "provider2", label: "Provider 2" },
-  { value: "provider3", label: "Provider 3" },
+  { value: "Telehealth", label: "Telehealth" },
+  { value: "Private Clinic", label: "Private Clinic" },
 ];
 
 // Assume this function fetches the list of applicants from an API
@@ -26,46 +24,75 @@ const fetchApplicants = async () => {
   return response.json();
 };
 
+// ✅ Fetch **directly added doctors** from API
+const fetchDoctors = async () => {
+  const response = await fetch(`${baseurl}/api/doctors/doctors`);
+  const data = await response.json(); // ✅ Convert response to JSON
+  console.log("Doctors Data:", data); // ✅ Debugging log
+
+  return data.doctors || []; // ✅ Return only the array, fallback to [] if undefined
+};
+
 const Services = () => {
-  
-    const [applicants, setApplicants] = useState([]);
+  const [people, setPeople] = useState([]); // Combined list of applicants & doctors
+  const [selectedPracticeType, setSelectedPracticeType] = useState(null);
 
-    useEffect(() => {
-      const getApplicants = async () => {
-        const data = await fetchApplicants();
-        const approvedApplicants = data.applicants.filter(
-          (applicant) => applicant.approvalStatus === "Approved"
-        );
-        setApplicants(approvedApplicants);
-      };
-  
-      getApplicants();
-  
-     // Listen for real-time updates when an applicant is approved
-    socket.on("applicationUpdated", (updatedApplicant) => {
-      if (updatedApplicant.approvalStatus === "Approved") {
-        setApplicants((prevApplicants) => {
-          const isExisting = prevApplicants.some(
-            (app) => app._id === updatedApplicant._id
-          );
-          return isExisting
-            ? prevApplicants
-            : [...prevApplicants, updatedApplicant];
-        });
-        toast.success(`Application approved: ${updatedApplicant.fullName}`);
-      }
-    });
-
-    // Handle WebSocket disconnections
-    socket.on("disconnect", () => {
-      console.warn("WebSocket disconnected. Attempting to reconnect...");
-    });
-
-    return () => {
-      socket.off("applicationUpdated");
-      socket.off("disconnect");
+  useEffect(() => {
+    const getPeople = async () => {
+      const data = await fetchApplicants();
+      const approvedApplicants = data.applicants.filter(
+        (applicant) => applicant.approvalStatus === "Approved"
+      );
+      const doctors = await fetchDoctors();
+      // ✅ Merge both lists and update state
+      setPeople([...approvedApplicants, ...doctors]);
     };
-  }, []);
+
+    getPeople();
+
+   // ✅ Real-time updates via WebSockets
+   socket.on("applicationUpdated", (updatedApplicant) => {
+    if (updatedApplicant.approvalStatus === "Approved") {
+      setPeople((prev) => {
+        const isExisting = prev.some((p) => p._id === updatedApplicant._id);
+        return isExisting ? prev : [...prev, updatedApplicant];
+      });
+      toast.success(`Application approved: ${updatedApplicant.fullName}`);
+    }
+  });
+
+  socket.on("newDoctor", (newDoctor) => {
+    setPeople((prevPeople) => {
+      const exists = prevPeople.some((p) => p._id === newDoctor._id);
+      if (!exists) {
+        console.log("🟢 Adding new doctor to the state:", newDoctor);
+        return [...prevPeople, newDoctor]; // ✅ Ensures UI re-renders
+      }
+      return prevPeople;
+    });
+    toast.success(`New doctor added: ${newDoctor.fullName}`);
+  });
+
+  socket.on("disconnect", () => {
+    console.warn("WebSocket disconnected. Attempting to reconnect...");
+  });
+
+  return () => {
+    socket.off("applicationUpdated");
+    socket.off("newDoctor");
+    socket.off("disconnect");
+  };
+}, []);
+
+  // Function to handle dropdown selection
+  const handleFilterChange = (selectedOption) => {
+    setSelectedPracticeType(selectedOption?.value || null);
+  };
+
+  // Filter applicants based on selected practiceType
+  const filteredPeople = selectedPracticeType
+    ? people.filter((p) => p.practiceType === selectedPracticeType)
+    : people;
 
   return (
     <div className="w-full min-h-screen py-5">
@@ -142,10 +169,10 @@ const Services = () => {
             <label>Consultation Scheduling</label>
             <Select
               options={options}
-              isDisabled={true} // Disable the dropdown
               className="react-select"
               classNamePrefix="react-select"
               placeholder="- Choose Consultation Scheduling -"
+              onChange={handleFilterChange}
               styles={{
                 control: (provided) => ({
                   ...provided,
@@ -174,99 +201,119 @@ const Services = () => {
         <span className="text-3xl text-black lg:flex hidden font-medium mt-8">
           AVAILABLE SERVICES
         </span>
-        <div className="flex lg:flex-row flex-col-reverse max-lg:mt-5 items-center lg:space-x-5 w-full h-[800px] max-lg:min-h-[1040px]">
-          <div className="lg:flex flex-col w-[45%] hidden mt-[1.9%] gap-y-5 max-h-[670px] overflow-y-scroll no-scrollbar">
-            {applicants.map((applicant, index) => (
-              <div
-                key={index}
-                className="w-full lg:h-[225px] h-[300px] px-4 py-2 rounded-sm bg-white border border-[#CCCCCC] flex justify-between"
-              >
-                <img
-                  src={applicant.profilePhoto[0] || "/image5.png"}
-                  alt="consultant image"
-                  className="w-[30%]"
-                />
-                <div className="flex flex-col gap-y-2 w-[65%]">
-                  <span className="text-black font-medium text-3xl">
-                  {applicant.fullName || "John Doe LLC"} {/* Replace with applicant's name */}
-                  </span>
-                  <div className="flex gap-x-1">
-                    <span className="text-[#858585] font-medium">
-                      Provider Type:
-                    </span>
-                    <span className="font-normal text-[#858585]">
-                      Primary Care Providers
-                    </span>
-                  </div>
-                  <div className="flex gap-x-1">
-                    <span className="text-[#858585] font-medium">Service:</span>
-                    <span className="font-normal text-[#858585]">
-                     {applicant.specialization || " Dentist, Dietician"}
-                    </span>
-                  </div>
-                  <div className="flex gap-x-1">
-                    <span className="text-[#858585] font-medium">
-                      Consultation Scheduling:
-                    </span>
-                    <span className="font-normal text-[#858585]">                
-                      {applicant.practiceType || "Telehealth Consultation"}
-                    </span>
-                  </div>
-                  <button className="bg-[#005EE2] border border-[#4D97FF] text-white rounded-md py-2">
-                    <span className="font-medium text-xl">Choose Service</span>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="lg:hidden flex-col w-[90%] flex gap-y-2 max-lg:max-h-[660px] overflow-y-scroll no-scrollbar">
-            {applicants.map((applicant, index) => (
-              <div
-                key={index}
-                className="w-full h-[220px] px-4 py-2 rounded-sm bg-white border border-[#CCCCCC]  gap-y-3flex flex-col justify-between"
-              >
-                <div className="flex w-full justify-between">
+        <div className="flex lg:flex-row flex-col-reverse mt-5 items-center lg:space-x-5 w-full h-[800px] max-lg:min-h-[1040px]">
+          <div className="lg:flex flex-col w-[45%] hidden gap-y-5 h-full overflow-y-scroll no-scrollbar self-start">
+            {filteredPeople.length > 0 ? (
+              filteredPeople.map((applicant, index) => (
+                <div
+                  key={index}
+                  className="w-full h-[220px] px-4 py-2 rounded-sm bg-white border border-[#CCCCCC] flex justify-between items-center"
+                >
                   <img
-                  src={applicant.profilePhoto[0] || "/image5.png"}
+                    src={applicant.profilePhoto[0] || "/image5.png"}
                     alt="consultant image"
-                    className="w-[46%] h-[140px]"
+                    className="w-[30%] max-h-[185.6px] min-h-[185px]"
                   />
-                  <div className="flex flex-col gap-y-2 w-[52%]">
-                    <span className="text-black font-medium text-xl">
-                      {applicant.fullName || "John Doe LLC"} {/* Replace with applicant's name */}
+                  <div className="flex flex-col gap-y-2 w-[65%]">
+                    <span className="text-black font-medium text-3xl">
+                      {applicant.fullName || "John Doe LLC"}
                     </span>
-                    <div className="flex ">
-                      <span className="text-[#858585] font-medium text-xs ">
+                    <div className="flex gap-x-1">
+                      <span className="text-[#858585] font-medium">
                         Provider Type:
                       </span>
-                      <span className="font-normal text-[#858585] text-xs">
-                        Primary Care Providers
+                      <span className="font-normal text-[#858585AD]">
+                      {applicant.providerType || "Primary Care Providers"}{" "}
                       </span>
                     </div>
                     <div className="flex gap-x-1">
-                      <span className="text-[#858585] font-medium text-xs">
+                      <span className="text-[#858585] font-medium">
                         Service:
                       </span>
-                      <span className="font-normal text-[#858585] text-xs">
-                      {applicant.specialization || " Dentist, Dietician"}
+                      <span className="font-normal text-[#858585AD]">
+                        {applicant.specialization || "Dentist, Dietician"}
                       </span>
                     </div>
                     <div className="flex gap-x-1">
-                      <span className="text-[#858585] font-medium text-xs">
+                      <span className="text-[#858585] font-medium">
                         Consultation Scheduling:
                       </span>
-                      <span className="font-normal text-[#858585] text-xs">         
-                      {applicant.practiceType || "Telehealth Consultation"}
+                      <span className="font-normal text-[#858585AD]">
+                        {applicant.practiceType || "Telehealth Consultation"}
                       </span>
                     </div>
+                    <button className="bg-[#005EE2] border border-[#4D97FF] text-white rounded-md py-2">
+                      <span className="font-medium text-xl">
+                        Choose Service
+                      </span>
+                    </button>
                   </div>
                 </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-center mt-5">
+                No applicants match the selected filter.
+              </p>
+            )}
+          </div>
+          <div className="lg:hidden flex-col w-[90%] flex gap-y-2 max-lg:min-h-[660px] overflow-y-scroll no-scrollbar justify-start">
+            {filteredPeople.length > 0 ? (
+              filteredPeople.map((applicant, index) => (
+                <div
+                  key={index}
+                  className="w-full h-[220px] px-2 py-2 rounded-sm bg-white border border-[#CCCCCC]  gap-y-3flex flex-col justify-between"
+                >
+                  <div className="flex w-full justify-between">
+                    <img
+                      src={applicant.profilePhoto[0] || "/image5.png"}
+                      alt="consultant image"
+                      className="w-[40%] h-[145px]"
+                    />
+                    <div className="flex flex-col w-[58%]">
+                      <span className="text-black font-medium text-lg">
+                        {applicant.fullName || "John Doe LLC"}{" "}
+                        {/* Replace with applicant's name */}
+                      </span>
+                      <div className=" w-full">
+                        <span className="text-[#858585] font-medium text-[11px]">
+                          Provider Type:
+                        </span>{" "}
+                        &nbsp;
+                        <span className="font-normal text-[#858585AD] text-xs ">
+                        {applicant.providerType || "Primary Care Providers"}{" "}
+                        </span>
+                      </div>
+                      <div className="w-full">
+                        <span className="text-[#858585] font-medium text-xs">
+                          Service:
+                        </span>
+                        &nbsp;
+                        <span className="font-normal text-[#858585AD] text-xs">
+                          {applicant.specialization || " Dentist, Dietician"}
+                        </span>
+                      </div>
+                      <div className="w-full">
+                        <span className="text-[#858585] font-medium text-xs">
+                          Consultation Scheduling:
+                        </span>
+                        &nbsp;
+                        <span className="font-normal text-[#858585AD] text-xs">
+                          {applicant.practiceType || "Telehealth Consultation"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
-                <button className="bg-[#005EE2] border border-[#4D97FF] text-white rounded-md py-1 mt-3 w-full">
-                  <span className="font-medium text-lg">Choose Service</span>
-                </button>
-              </div>
-            ))}
+                  <button className="bg-[#005EE2] border border-[#4D97FF] text-white rounded-md py-1 mt-3 w-full">
+                    <span className="font-medium text-lg">Choose Service</span>
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-center mt-5">
+                No applicants match the selected filter.
+              </p>
+            )}
           </div>
           <div className="lg:hidden flex items-start w-[90%]">
             <span className="lg:text-3xl text-xl text-black lg:hidden flex font-medium mt-8 mb-5">
@@ -276,7 +323,7 @@ const Services = () => {
           {/* <img src="/map.png" alt="map" className="lg:w-[55%] h-full w-[98%]" /> */}
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.685052381312!2d101.6832174803171!3d3.138675048665258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc36248d3dc25d%3A0xb3dbd79d046232c1!2sHilton%20Kuala%20Lumpur!5e0!3m2!1sen!2smy!4v1644321122334"
-            className="lg:w-[55%] lg:h-[80%] w-[90%] max-lg:min-h-[300px]"
+            className="lg:w-[55%] lg:h-[100%] w-[90%] max-lg:min-h-[300px] lg:px-4"
             style={{ border: "none" }}
             allowFullScreen=""
             loading="lazy"

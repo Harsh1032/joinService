@@ -32,6 +32,19 @@ const RejectApplications = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log("✅ JavaScript Loaded");
+  
+    socket.on("connect", () => {
+      console.log("✅ WebSocket Connected:", socket.id);
+    });
+  
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
+  
+
+  useEffect(() => {
     const getApplicants = async () => {
       const data = await fetchApplicants();
       const pendingApplicants = data.applicants.filter(
@@ -75,7 +88,7 @@ const RejectApplications = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `${baseurl}/api/applicants/approve/${applicantId}`,
+        `${baseurl}/api/applicants/${actionType}/${applicantId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

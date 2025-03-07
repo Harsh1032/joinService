@@ -4,15 +4,15 @@ const cors = require("cors");
 const dotenv = require("dotenv").config();
 const http = require("http"); // Required for socket.io
 const { Server } = require("socket.io");
-
-const applicantRoutes = require("./routes/routes");
+const applicantRoutes = require("./routes/applicantRoutes");
+const doctorRoutes = require("./routes/doctorRoutes");
 
 const app = express();
 const server = http.createServer(app);
 
 //**CORS Configuration** (Define before using `cors()`)
 const corsOptions = {
-  origin: ["https://celebrated-granita-06a2ae.netlify.app"], //   http://localhost:5173
+  origin: ["http://localhost:5173"], //   https://celebrated-granita-06a2ae.netlify.app
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // Allow credentials
@@ -38,7 +38,8 @@ mongoose
   .catch((err) => console.error("❌ Database connection failed:", err));
 
 // 🔹 **Use Routes (AFTER MIDDLEWARE & DB Connection)**
-app.use("/api/applicants", applicantRoutes);
+app.use("/api/applicants", applicantRoutes);// 
+app.use("/api/doctors", doctorRoutes);
 
 // 🔹 **WebSocket Connection**
 io.on("connection", (socket) => {

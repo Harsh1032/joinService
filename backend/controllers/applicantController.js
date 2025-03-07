@@ -68,11 +68,10 @@ exports.createApplicant = async (req, res, io) => {
 
     await newApplicant.save();
 
-    // Emit event for real-time update
     if (io) {
+      console.log("🔴 Emitting newApplicant event:", newApplicant); // Add this
       io.emit("newApplicant", newApplicant);
     }
-
     res.status(201).json({ success: true, applicant: newApplicant });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
