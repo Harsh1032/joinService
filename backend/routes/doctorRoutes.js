@@ -2,7 +2,9 @@ const express = require("express");
 const multer = require("multer");
 const {
   createDoctor,
-  getAllDoctors
+  getAllDoctors,
+  deleteDoctor,
+  updateDoctor
 } = require("../controllers/doctorControllers");
 
 const router = express.Router();
@@ -21,5 +23,8 @@ const uploadFields = upload.fields([
 
 router.post("/doctors", uploadFields, (req, res) => createDoctor(req, res, req.app.get("io")));
 router.get("/doctors", (req, res) => getAllDoctors(req, res, req.app.get("io")));
+router.delete("/delete/:id", (req, res) => deleteDoctor(req, res, req.app.get("io")));
+router.put("/update/:id", uploadFields, (req, res) => updateDoctor(req, res, req.app.get("io")));
+
 
 module.exports = router;

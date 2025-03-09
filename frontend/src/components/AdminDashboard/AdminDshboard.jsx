@@ -3,13 +3,29 @@ import MaxWidthWrapper from "../MaxWidthWrapper";
 import { CloudUpload, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Select from "react-select";
 import toast, { Toaster } from "react-hot-toast";
 import { io } from "socket.io-client";
 
+const baseurl = import.meta.env.VITE_BASE_URL;
+// Ensure a single socket connection (outside component to prevent multiple connections)
+const socket = io(baseurl, {
+  transports: ["websocket", "polling"],
+  withCredentials: true, // Ensure proper CORS handling
+});
+
+const options = [
+  { value: "Telehealth", label: "Telehealth" },
+  { value: "Private Clinic", label: "Private Clinic" },
+];
+
 const AdminDshboard = () => {
   const navigate = useNavigate();
-
+  const [doctors, setDoctors] = useState([]); // ✅ Store doctors
   const [loading, setLoading] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState(null); // ✅ Track the selected doctor
+  const [isEditing, setIsEditing] = useState(false); // ✅ Track form mode (Add or Edit)
+
   // State to manage form fields and files
   const [formData, setFormData] = useState({
     fullName: "",
@@ -21,6 +37,16 @@ const AdminDshboard = () => {
   const [profilePhoto, setProfilePhoto] = useState({ file: null, progress: 0 });
 
   const profilePhotoInputRef = useRef(null);
+  // ✅ Fetch doctors from API and update state
+  const fetchDoctors = async () => {
+    try {
+      const response = await fetch(`${baseurl}/api/doctors/doctors`);
+      const data = await response.json();
+      setDoctors(data.doctors || []);
+    } catch (error) {
+      console.error("Error fetching doctors:", error);
+    }
+  };
 
   // Handle input change for text fields
   const handleInputChange = (e) => {
@@ -68,14 +94,9 @@ const AdminDshboard = () => {
     }
   };
 
-  const baseurl = import.meta.env.VITE_BASE_URL;
-  // Ensure a single socket connection (outside component to prevent multiple connections)
-  const socket = io(baseurl, {
-    transports: ["websocket", "polling"],
-    withCredentials: true, // Ensure proper CORS handling
-  });
-
   useEffect(() => {
+    fetchDoctors(); // Initial Fetch
+
     socket.on("connect", () => {
       console.log("Connected to WebSocket:", socket.id);
     });
@@ -86,51 +107,111 @@ const AdminDshboard = () => {
 
     socket.on("newDoctor", (newDoctor) => {
       console.log("New Doctor received in real-time:", newDoctor);
+      setDoctors((prevDoctors) => [newDoctor, ...prevDoctors]); // Add at the top
+    });
+
+    socket.on("doctorDeleted", ({ doctorId }) => {
+      console.log("Doctor Deleted:", doctorId);
+      setDoctors((prevDoctors) =>
+        prevDoctors.filter((doc) => doc._id !== doctorId)
+      );
+    });
+
+    socket.on("doctorUpdated", (updatedDoctor) => {
+      setDoctors((prevDoctors) =>
+        prevDoctors.map((doc) =>
+          doc._id === updatedDoctor._id ? updatedDoctor : doc
+        )
+      );
     });
 
     return () => {
       socket.off("newDoctor");
+      socket.off("doctorDeleted");
+      socket.off("doctorUpdated");
     };
   }, []);
+
+  // ✅ Delete doctor function
+  const handleDelete = async (doctorId) => {
+    // const confirmDelete = window.confirm(
+    //   "Are you sure you want to delete this doctor?"
+    // );
+    // if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(
+        `${baseurl}/api/doctors/delete/${doctorId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await response.json();
+      if (data.success) {
+        setDoctors((prevDoctors) =>
+          prevDoctors.filter((doc) => doc._id !== doctorId)
+        );
+      } else {
+        alert("Failed to delete doctor.");
+      }
+    } catch (error) {
+      console.error("Error deleting doctor:", error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Create FormData to send in the POST request
     const form = new FormData();
     form.append("fullName", formData.fullName);
     form.append("providerType", formData.providerType);
     form.append("specialization", formData.specialization);
     form.append("practiceType", formData.practiceType);
+    if (profilePhoto.file) form.append("profilePhoto", profilePhoto.file);
 
-    if (profilePhoto.file) {
-      form.append("profilePhoto", profilePhoto.file);
-    }
+    console.log("🚀 Sending Update Request:", {
+      method: isEditing ? "PUT" : "POST",
+      url: isEditing
+        ? `${baseurl}/api/doctors/update/${selectedDoctor._id}`
+        : `${baseurl}/api/doctors/doctors`,
+      formData: Object.fromEntries(form.entries()), // ✅ Convert FormData to Object for Debugging
+    });
+
     try {
-      const response = await axios.post(
-        `${baseurl}/api/doctors/doctors`, // Update with your backend API URL
-        form,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const response = await axios({
+        method: isEditing ? "PUT" : "POST",
+        url: isEditing
+          ? `${baseurl}/api/doctors/update/${selectedDoctor._id}`
+          : `${baseurl}/api/doctors/doctors`,
+        data: form,
+        headers: { "Content-Type": "multipart/form-data" }, // ✅ Ensure Correct Header
+      });
 
       if (response.data.success) {
-        // Handle successful submission
-        toast.success("Application submitted successfully!");
-        // Reset everything after successful submission
+        toast.success(
+          isEditing
+            ? "Doctor Updated Successfully!"
+            : "Doctor Added Successfully!"
+        );
         resetFormState();
         resetFileState();
-        setLoading(false);
+        if (isEditing) {
+          socket.emit("doctorUpdated", response.data.doctor);
+          setIsEditing(false);
+        } else {
+          socket.emit("newDoctor", response.data.doctor);
+        }
       } else {
-        // Handle failure
-        toast.error("Failed to submit the application.");
-        setLoading(false);
+        toast.error("Failed to save doctor.");
       }
     } catch (error) {
-      console.error("Error submitting application:", error);
-      toast.error("Error submitting the application.");
-      setLoading(false);
+      console.error("❌ Error Sending Update Request:", error);
+      toast.error("Error saving doctor.");
     }
+
+    setLoading(false);
   };
 
   // Reset form data
@@ -141,6 +222,8 @@ const AdminDshboard = () => {
       specialization: "",
       practiceType: "",
     });
+    setSelectedDoctor(null);
+    setIsEditing(false);
   };
 
   // Reset file states
@@ -336,7 +419,7 @@ const AdminDshboard = () => {
           >
             <div className="flex items-center justify-center   bg-[#4D97FF] py-3 px-2 gap-x-4">
               <span className="font-medium lg:text-3xl text-center text-xl text-white uppercase">
-                Add new Doctor
+                {isEditing ? "Update Doctor" : "Add New Doctor"}
               </span>
             </div>
             <div className="w-full bg-[#CFE3FF] p-3 flex items-center justify-center">
@@ -390,24 +473,6 @@ const AdminDshboard = () => {
               onChange={handleInputChange}
               className="placeholder:text-[#0000006B] lg:placeholder:text-xl placeholder:text-base px-2 font-normal py-2 lg:px-5 outline-none"
             />
-            <div className="bg-[#DEECFF] lg:py-1 lg:px-5 p-2 flex space-x-2">
-              <button className="bg-[#DFDFDF] flex space-x-3  px-4 lg:py-1 rounded-[3px] border border-[#B6B6B6]">
-                <span className="text-[#0000006B] text-base font-normal">
-                  X
-                </span>
-                <span className="text-[#0000006B] text-base font-normal">
-                  Dentist
-                </span>
-              </button>
-              <button className="bg-[#DFDFDF] flex space-x-3  px-4 lg:py-1 rounded-[3px] border border-[#B6B6B6]">
-                <span className="text-[#0000006B] text-base font-normal">
-                  X
-                </span>
-                <span className="text-[#0000006B] text-base font-normal">
-                  Dietician
-                </span>
-              </button>
-            </div>
             <div className="w-full bg-[#CFE3FF] p-3 flex items-center justify-center">
               <ul className="square">
                 <li>
@@ -417,14 +482,40 @@ const AdminDshboard = () => {
                 </li>
               </ul>
             </div>
-            <input
-              type="text"
-              placeholder="Enter Consultation Scheduling Type Here"
-              name="practiceType"
-              value={formData.practiceType}
-              onChange={handleInputChange}
-              className="placeholder:text-[#0000006B] lg:placeholder:text-xl placeholder:text-base px-2 font-normal py-2 lg:px-5 outline-none"
+            <Select
+              options={options}
+              className="react-select"
+              classNamePrefix="react-select"
+              placeholder="- Choose Consultation Scheduling -"
+              value={options.find(
+                (option) => option.value === formData.practiceType
+              )}
+              onChange={(selectedOption) =>
+                setFormData({ ...formData, practiceType: selectedOption.value })
+              }
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  width: "100%",
+                  padding: "2px 4px 2px 4px",
+                  borderRadius: "0px",
+                  // borderColor: "",
+                  backgroundColor: "#fff",
+                }),
+                option: (provided, state) => ({
+                  ...provided,
+                  color: state.isSelected ? "#fff" : "#858585",
+                  backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
+                  fontSize: "16px",
+                  fontWeight: "normal",
+                }),
+                singleValue: (provided) => ({
+                  ...provided,
+                  color: "#858585",
+                }),
+              }}
             />
+
             <div className="w-full bg-[#CFE3FF] p-3 flex items-center justify-center">
               <ul className="square">
                 <li>
@@ -484,12 +575,16 @@ const AdminDshboard = () => {
                 </button>
               </div>
             )}
+
             <button
               type="submit"
-              disabled={loading}
-              className="bg-[#1D6BD7] p-3 text-white font-medium lg:text-xl text-lg"
+              className="bg-blue-500 text-white p-2 w-full mt-5"
             >
-              {loading ? "Adding..." : "ADD DOCTOR"}
+              {loading
+                ? "Saving..."
+                : isEditing
+                ? "UPDATE DOCTOR"
+                : "ADD DOCTOR"}
             </button>
           </form>
           <div className=" lg:w-[47%] w-[90%] bg-[#DEECFF] border-4 border-[#4D97FF] rounded-[14px] flex flex-col lg:mb-5 overflow-hidden">
@@ -552,74 +647,50 @@ const AdminDshboard = () => {
               MANAge existing doctors
             </span>
           </div>
-          <div className="bg-transparent w-full py-3 lg:px-5 px-2 flex items-center justify-between">
-            <span className="text-[#00429E] font-medium  lg:text-2xl text-sm">
-              MUHAMMAD AIMAN
-            </span>
-            <div className="flex space-x-3">
-              <button className="bg-[#E20004] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs   font-medium">
-                  DELETE
+          {/* ✅ Dynamically Render Doctors (with Alternating Row Colors) */}
+          {doctors.length > 0 ? (
+            doctors.map((doctor, index) => (
+              <div
+                key={doctor._id}
+                className={`w-full py-3 lg:px-5 px-2 flex items-center justify-between ${
+                  index % 2 === 0 ? "bg-transparent" : "bg-[#DEECFF]"
+                }`}
+              >
+                <span className="text-[#00429E] font-medium lg:text-2xl text-sm">
+                  {doctor.fullName}
                 </span>
-              </button>
-              <button className="bg-[#005EE2] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs  font-medium">
-                  Edit Details
-                </span>
-              </button>
+                <div className="flex space-x-3">
+                  {/* ✅ DELETE BUTTON */}
+                  <button
+                    onClick={() => handleDelete(doctor._id)}
+                    className="bg-[#E20004] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]"
+                  >
+                    <span className="text-white lg:text-lg text-xs font-medium">
+                      DELETE
+                    </span>
+                  </button>
+
+                  {/* ✅ EDIT BUTTON */}
+                  <button
+                    onClick={() => {
+                      setSelectedDoctor(doctor);
+                      setFormData(doctor);
+                      setIsEditing(true);
+                    }}
+                    className="bg-[#005EE2] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]"
+                  >
+                    <span className="text-white lg:text-lg text-xs font-medium">
+                      Edit Details
+                    </span>
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="text-center py-5 text-gray-500">
+              No doctors found.
             </div>
-          </div>
-          <div className="bg-[#DEECFF] w-full py-3 lg:px-5 px-2 flex items-center justify-between">
-            <span className="text-[#00429E] font-medium  lg:text-2xl text-sm">
-              SAFWAN RASHID
-            </span>
-            <div className="flex space-x-3">
-              <button className="bg-[#E20004] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs   font-medium">
-                  DELETE
-                </span>
-              </button>
-              <button className="bg-[#005EE2] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs  font-medium">
-                  Edit Details
-                </span>
-              </button>
-            </div>
-          </div>
-          <div className="bg-transparent w-full py-3 lg:px-5 px-2 flex justify-between items-center">
-            <span className="text-[#00429E] font-medium  lg:text-2xl text-sm">
-              NURUL ATIQAH
-            </span>
-            <div className="flex space-x-3">
-              <button className="bg-[#E20004] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs   font-medium">
-                  DELETE
-                </span>
-              </button>
-              <button className="bg-[#005EE2] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs   font-medium">
-                  Edit Details
-                </span>
-              </button>
-            </div>
-          </div>
-          <div className="bg-[#DEECFF] w-full py-3 lg:px-5 px-2 flex justify-between items-center">
-            <span className="text-[#00429E] font-medium  lg:text-2xl text-sm">
-              MUHAMMAD AQIL
-            </span>
-            <div className="flex space-x-3">
-              <button className="bg-[#E20004] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs  font-medium">
-                  DELETE
-                </span>
-              </button>
-              <button className="bg-[#005EE2] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]">
-                <span className="text-white lg:text-lg text-xs   font-medium">
-                  Edit Details
-                </span>
-              </button>
-            </div>
-          </div>
+          )}
         </div>
         <div className="flex justify-between border-4 border-[#4D97FF] rounded-[14px] flex-col lg:w-full w-[90%] max-lg:mx-auto overflow-hidden">
           <div className="flex items-center justify-center bg-[#4D97FF] py-3 px-2 gap-x-4">
@@ -659,7 +730,7 @@ const AdminDshboard = () => {
           </div>
         </div>
       </MaxWidthWrapper>
-      <Toaster/>
+      <Toaster />
     </div>
   );
 };

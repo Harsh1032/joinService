@@ -50,39 +50,57 @@ const Services = () => {
 
     getPeople();
 
-   // ✅ Real-time updates via WebSockets
-   socket.on("applicationUpdated", (updatedApplicant) => {
-    if (updatedApplicant.approvalStatus === "Approved") {
-      setPeople((prev) => {
-        const isExisting = prev.some((p) => p._id === updatedApplicant._id);
-        return isExisting ? prev : [...prev, updatedApplicant];
-      });
-      toast.success(`Application approved: ${updatedApplicant.fullName}`);
-    }
-  });
-
-  socket.on("newDoctor", (newDoctor) => {
-    setPeople((prevPeople) => {
-      const exists = prevPeople.some((p) => p._id === newDoctor._id);
-      if (!exists) {
-        console.log("🟢 Adding new doctor to the state:", newDoctor);
-        return [...prevPeople, newDoctor]; // ✅ Ensures UI re-renders
+    // ✅ Real-time updates via WebSockets
+    socket.on("applicationUpdated", (updatedApplicant) => {
+      if (updatedApplicant.approvalStatus === "Approved") {
+        setPeople((prev) => {
+          const isExisting = prev.some((p) => p._id === updatedApplicant._id);
+          return isExisting ? prev : [...prev, updatedApplicant];
+        });
+        toast.success(`Application approved: ${updatedApplicant.fullName}`);
       }
-      return prevPeople;
     });
-    toast.success(`New doctor added: ${newDoctor.fullName}`);
-  });
 
-  socket.on("disconnect", () => {
-    console.warn("WebSocket disconnected. Attempting to reconnect...");
-  });
+    socket.on("newDoctor", (newDoctor) => {
+      setPeople((prevPeople) => {
+        const exists = prevPeople.some((p) => p._id === newDoctor._id);
+        if (!exists) {
+          console.log("🟢 Adding new doctor to the state:", newDoctor);
+          return [...prevPeople, newDoctor]; // ✅ Ensures UI re-renders
+        }
+        return prevPeople;
+      });
+      toast.success(`New doctor added: ${newDoctor.fullName}`);
+    });
 
-  return () => {
-    socket.off("applicationUpdated");
-    socket.off("newDoctor");
-    socket.off("disconnect");
-  };
-}, []);
+    // ✅ Listen for doctor updates
+    socket.on("doctorUpdated", (updatedDoctor) => {
+      console.log("🟡 Doctor Updated in Real-Time:", updatedDoctor);
+      setPeople((prevPeople) =>
+        prevPeople.map((doc) =>
+          doc._id === updatedDoctor._id ? updatedDoctor : doc
+        )
+      );
+    });
+
+    // ✅ Real-time doctor deletion handling
+    socket.on("doctorDeleted", ({ doctorId }) => {
+      console.log("🔴 Doctor Deleted:", doctorId);
+      setPeople((prevPeople) => prevPeople.filter((p) => p._id !== doctorId));
+    });
+
+    socket.on("disconnect", () => {
+      console.warn("WebSocket disconnected. Attempting to reconnect...");
+    });
+
+    return () => {
+      socket.off("applicationUpdated");
+      socket.off("newDoctor");
+      socket.off("doctorUpdated"); // ✅ Unsubscribe from doctorUpdated
+      socket.off("doctorDeleted"); // ✅ Unsubscribe from doctorDeleted
+      socket.off("disconnect");
+    };
+  }, []);
 
   // Function to handle dropdown selection
   const handleFilterChange = (selectedOption) => {
@@ -223,7 +241,7 @@ const Services = () => {
                         Provider Type:
                       </span>
                       <span className="font-normal text-[#858585AD]">
-                      {applicant.providerType || "Primary Care Providers"}{" "}
+                        {applicant.providerType || "Primary Care Providers"}{" "}
                       </span>
                     </div>
                     <div className="flex gap-x-1">
@@ -280,7 +298,7 @@ const Services = () => {
                         </span>{" "}
                         &nbsp;
                         <span className="font-normal text-[#858585AD] text-xs ">
-                        {applicant.providerType || "Primary Care Providers"}{" "}
+                          {applicant.providerType || "Primary Care Providers"}{" "}
                         </span>
                       </div>
                       <div className="w-full">
