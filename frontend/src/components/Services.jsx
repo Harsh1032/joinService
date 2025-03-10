@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import Select from "react-select";
 import { io } from "socket.io-client";
+import toast, { Toaster } from "react-hot-toast";
 
 const baseurl = import.meta.env.VITE_BASE_URL;
 // Establish Socket.io connection
@@ -28,14 +29,31 @@ const fetchApplicants = async () => {
 const fetchDoctors = async () => {
   const response = await fetch(`${baseurl}/api/doctors/doctors`);
   const data = await response.json(); // ✅ Convert response to JSON
-  console.log("Doctors Data:", data); // ✅ Debugging log
 
   return data.doctors || []; // ✅ Return only the array, fallback to [] if undefined
+};
+
+const fetchFilters = async () => {
+  try {
+    const response = await fetch(`${baseurl}/api/filters/filters`);
+    const data = await response.json();
+    return data.filters || []; // Return filters array, fallback to []
+  } catch (error) {
+    console.error("❌ Error fetching filters:", error);
+    return [];
+  }
 };
 
 const Services = () => {
   const [people, setPeople] = useState([]); // Combined list of applicants & doctors
   const [selectedPracticeType, setSelectedPracticeType] = useState(null);
+  const [alliedHealthOptions, setAlliedHealthOptions] = useState([]);
+  const [filters, setFilters] = useState([]); // ✅ Store filters in state
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [providerOptions, setProviderOptions] = useState([]);
+  const [selectedProvider, setSelectedProvider] = useState(null);
+
+  console.log(people);
 
   useEffect(() => {
     const getPeople = async () => {
@@ -50,6 +68,13 @@ const Services = () => {
 
     getPeople();
 
+    const getFilters = async () => {
+      const allFilters = await fetchFilters();
+      setFilters(allFilters); // ✅ Set fetched filters
+    };
+
+    getFilters(); // Fetch filters on component mount
+
     // ✅ Real-time updates via WebSockets
     socket.on("applicationUpdated", (updatedApplicant) => {
       if (updatedApplicant.approvalStatus === "Approved") {
@@ -57,7 +82,7 @@ const Services = () => {
           const isExisting = prev.some((p) => p._id === updatedApplicant._id);
           return isExisting ? prev : [...prev, updatedApplicant];
         });
-        toast.success(`Application approved: ${updatedApplicant.fullName}`);
+        // toast.success(`Application approved: ${updatedApplicant.fullName}`);
       }
     });
 
@@ -70,12 +95,12 @@ const Services = () => {
         }
         return prevPeople;
       });
-      toast.success(`New doctor added: ${newDoctor.fullName}`);
+      // toast.success(`New doctor added: ${newDoctor.fullName}`);
     });
 
     // ✅ Listen for doctor updates
     socket.on("doctorUpdated", (updatedDoctor) => {
-      console.log("🟡 Doctor Updated in Real-Time:", updatedDoctor);
+      // console.log("🟡 Doctor Updated in Real-Time:", updatedDoctor);
       setPeople((prevPeople) =>
         prevPeople.map((doc) =>
           doc._id === updatedDoctor._id ? updatedDoctor : doc
@@ -85,8 +110,15 @@ const Services = () => {
 
     // ✅ Real-time doctor deletion handling
     socket.on("doctorDeleted", ({ doctorId }) => {
-      console.log("🔴 Doctor Deleted:", doctorId);
+      // console.log("🔴 Doctor Deleted:", doctorId);
       setPeople((prevPeople) => prevPeople.filter((p) => p._id !== doctorId));
+    });
+
+    // ✅ Listen for real-time updates from WebSocket
+    socket.on("newFilter", (newFilter) => {
+      // console.log("📡 New Filter Received:", newFilter);
+      setFilters((prevFilters) => [...prevFilters, newFilter]); // ✅ Add new filter
+      // toast.success(`New filter added: ${newFilter.filterName}`);
     });
 
     socket.on("disconnect", () => {
@@ -99,19 +131,90 @@ const Services = () => {
       socket.off("doctorUpdated"); // ✅ Unsubscribe from doctorUpdated
       socket.off("doctorDeleted"); // ✅ Unsubscribe from doctorDeleted
       socket.off("disconnect");
+      socket.off("newFilter"); // ✅ Cleanup listener
     };
   }, []);
 
-  // Function to handle dropdown selection
-  const handleFilterChange = (selectedOption) => {
-    setSelectedPracticeType(selectedOption?.value || null);
+  // Create unique options for the filter dropdown
+  useEffect(() => {
+    const specializationOptions = [
+      ...new Set(people.map((p) => p.specialization).filter(Boolean)),
+    ].map((spec) => ({
+      value: spec,
+      label: spec,
+    }));
+
+    const filterOptions = filters.map((filter) => ({
+      value: filter.filterName,
+      label: filter.filterName,
+    }));
+
+    setAlliedHealthOptions([...filterOptions, ...specializationOptions]);
+  }, [filters, people]);
+
+  useEffect(() => {
+    const providerOptions = [
+      ...new Set(people.map((p) => p.providerType || "Primary Care Providers")),
+    ].map((provider) => ({
+      value: provider,
+      label: provider,
+    }));
+
+    setProviderOptions(providerOptions);
+  }, [people]);
+
+  const handlePracticeTypeChange = (selectedOption) => {
+    setSelectedPracticeType(selectedOption ? selectedOption.value : null);
   };
 
-  // Filter applicants based on selected practiceType
-  const filteredPeople = selectedPracticeType
-    ? people.filter((p) => p.practiceType === selectedPracticeType)
-    : people;
+  const handleAlliedHealthChange = (selectedOption) => {
+    setSelectedFilter(selectedOption ? selectedOption.value : null);
+  };
 
+  const handleProviderChange = (selectedOption) => {
+    setSelectedProvider(selectedOption ? selectedOption.value : null);
+  };
+
+  const filteredPeople = people.filter((p) => {
+    const matchesPracticeType = !selectedPracticeType || p.practiceType === selectedPracticeType;
+    const matchesSpecialization = !selectedFilter || p.specialization === selectedFilter;
+    const matchesProvider = !selectedProvider || p.providerType === selectedProvider || (!p.providerType && selectedProvider === "Primary Care Providers");
+  
+    // ✅ If all three filters are selected, return only those who match all conditions
+    if (selectedPracticeType && selectedFilter && selectedProvider) {
+      return matchesPracticeType && matchesSpecialization && matchesProvider;
+    }
+  
+    // ✅ If two filters are selected, return those who match both conditions
+    if (selectedPracticeType && selectedFilter) {
+      return matchesPracticeType && matchesSpecialization;
+    }
+  
+    if (selectedPracticeType && selectedProvider) {
+      return matchesPracticeType && matchesProvider;
+    }
+  
+    if (selectedFilter && selectedProvider) {
+      return matchesSpecialization && matchesProvider;
+    }
+  
+    // ✅ If only one filter is selected, return those who match that condition
+    if (selectedPracticeType) {
+      return matchesPracticeType;
+    }
+  
+    if (selectedFilter) {
+      return matchesSpecialization;
+    }
+  
+    if (selectedProvider) {
+      return matchesProvider;
+    }
+  
+    // ✅ If no filter is applied, return all people
+    return true;
+  });
+  
   return (
     <div className="w-full min-h-screen py-5">
       <h1 className="font-medium lg:text-6xl text-2xl my-10 w-full text-center">
@@ -122,8 +225,13 @@ const Services = () => {
           <div className="flex flex-col gap-y-3 lg:w-[25%] w-[90%]">
             <label>Search for Provider</label>
             <Select
-              options={options}
-              isDisabled={true} // Disable the dropdown
+              options={providerOptions} // ✅ Dynamic provider options
+              value={
+                selectedProvider
+                  ? { value: selectedProvider, label: selectedProvider }
+                  : null
+              }
+              onChange={handleProviderChange} // ✅ Update selection
               className="react-select"
               classNamePrefix="react-select"
               placeholder="- Choose Provider -"
@@ -154,8 +262,13 @@ const Services = () => {
           <div className="flex flex-col gap-y-3 lg:w-[30%] w-[90%] max-lg:mt-5">
             <label>Filter by Allied Health Services</label>
             <Select
-              options={options}
-              isDisabled={true} // Disable the dropdown
+              options={alliedHealthOptions}
+              value={
+                selectedFilter
+                  ? { value: selectedFilter, label: selectedFilter }
+                  : null
+              }
+              onChange={handleAlliedHealthChange}
               className="react-select"
               classNamePrefix="react-select"
               placeholder="- Filter Allied Health Services -"
@@ -187,10 +300,15 @@ const Services = () => {
             <label>Consultation Scheduling</label>
             <Select
               options={options}
+              value={
+                selectedPracticeType
+                  ? { value: selectedPracticeType, label: selectedPracticeType }
+                  : null
+              }
+              onChange={handlePracticeTypeChange}
               className="react-select"
               classNamePrefix="react-select"
               placeholder="- Choose Consultation Scheduling -"
-              onChange={handleFilterChange}
               styles={{
                 control: (provided) => ({
                   ...provided,
@@ -348,6 +466,7 @@ const Services = () => {
           ></iframe>
         </div>
       </MaxWidthWrapper>
+      <Toaster />
     </div>
   );
 };

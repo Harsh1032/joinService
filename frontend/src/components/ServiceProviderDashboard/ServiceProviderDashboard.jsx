@@ -79,7 +79,35 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Patients list
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E]">
+                    Care Management
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Patient List</b> – Complete directory with quick
+                      access.
+                    </li>
+                    <li>
+                      <b>Patient Insights</b> – Condition history & vitals
+                      tracking.
+                    </li>
+                    <li>
+                      <b>Patient Care Collaboration</b> – Engage with
+                      professionals & caregivers.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] px-4 py-3 max-lg:space-y-2">
               <div className="flex justify-between ">
@@ -133,7 +161,35 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Patient Insights
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E]">
+                    Care Management
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Patient List</b> – Complete directory with quick
+                      access.
+                    </li>
+                    <li>
+                      <b>Patient Insights</b> – Condition history & vitals
+                      tracking.
+                    </li>
+                    <li>
+                      <b>Patient Care Collaboration</b> – Engage with
+                      professionals & caregivers.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] px-4 py-3 flex flex-col gap-y-2">
               <div className="flex justify-between items-center">
@@ -195,7 +251,35 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Patient Care Collaboration
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E]">
+                    Care Management
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Patient List</b> – Complete directory with quick
+                      access.
+                    </li>
+                    <li>
+                      <b>Patient Insights</b> – Condition history & vitals
+                      tracking.
+                    </li>
+                    <li>
+                      <b>Patient Care Collaboration</b> – Engage with
+                      professionals & caregivers.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] flex flex-col gap-y-4 px-4 py-3">
               <div className="flex justify-between ">
@@ -266,8 +350,34 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                 <li className=" font-medium uppercase lg:text-2xl text-lg">
                   Bills and Invoices
                 </li>
-              </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              </ul>{" "}
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Practice Management
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Billing & Invoices</b> – Revenue tracking & payments.
+                    </li>
+                    <li>
+                      <b>Sales & Revenue</b> – Performance-based analytics.
+                    </li>
+                    <li>
+                      <b>Marketing & Promotions</b> – Patient outreach &
+                      referrals.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] px-4 py-3">
               <div className="flex justify-between">
@@ -321,7 +431,33 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Sales and Revenue
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Practice Management
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Billing & Invoices</b> – Revenue tracking & payments.
+                    </li>
+                    <li>
+                      <b>Sales & Revenue</b> – Performance-based analytics.
+                    </li>
+                    <li>
+                      <b>Marketing & Promotions</b> – Patient outreach &
+                      referrals.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] flex flex-col gap-y-2 px-4 py-3">
               <table className="w-full border-collapse flex-1">
@@ -386,7 +522,33 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Marketing & Promotions
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Practice Management
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Billing & Invoices</b> – Revenue tracking & payments.
+                    </li>
+                    <li>
+                      <b>Sales & Revenue</b> – Performance-based analytics.
+                    </li>
+                    <li>
+                      <b>Marketing & Promotions</b> – Patient outreach &
+                      referrals.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] px-4 py-3 flex flex-col gap-y-2">
               <div className="flex justify-between items-center">
@@ -470,7 +632,37 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Practice Insights
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Analytics & AI Insights
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Practice Insights</b> – Appointment volumes & referral
+                      analysis.
+                    </li>
+                    <li>
+                      <b>Patient Insights</b> – Population-level analytics.
+                    </li>
+                    <li>
+                      <b>AI-Driven Care Plans</b> – Predictive alerts &
+                      adjustments.
+                    </li>
+                    <li>
+                      <b>Patient Feedback</b> – Surveys & improvement areas.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] space-y-2 px-4 py-3">
               <div className="flex flex-col space-y">
@@ -506,7 +698,37 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Patient Insights
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Analytics & AI Insights
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Practice Insights</b> – Appointment volumes & referral
+                      analysis.
+                    </li>
+                    <li>
+                      <b>Patient Insights</b> – Population-level analytics.
+                    </li>
+                    <li>
+                      <b>AI-Driven Care Plans</b> – Predictive alerts &
+                      adjustments.
+                    </li>
+                    <li>
+                      <b>Patient Feedback</b> – Surveys & improvement areas.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] px-4 py-3 flex flex-col gap-y-2">
               <div className="flex justify-between items-center">
@@ -569,7 +791,37 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   and Care Plan
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Analytics & AI Insights
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Practice Insights</b> – Appointment volumes & referral
+                      analysis.
+                    </li>
+                    <li>
+                      <b>Patient Insights</b> – Population-level analytics.
+                    </li>
+                    <li>
+                      <b>AI-Driven Care Plans</b> – Predictive alerts &
+                      adjustments.
+                    </li>
+                    <li>
+                      <b>Patient Feedback</b> – Surveys & improvement areas.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <img src="/image23.png" alt="chart" />
             <div className="flex gap-x-4 w-full p-4 bg-[#CFE3FF] text-[#00429E] items-center justify-center">
@@ -578,7 +830,37 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Patient Satisfaction & Feedback
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2  w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Analytics & AI Insights
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Practice Insights</b> – Appointment volumes & referral
+                      analysis.
+                    </li>
+                    <li>
+                      <b>Patient Insights</b> – Population-level analytics.
+                    </li>
+                    <li>
+                      <b>AI-Driven Care Plans</b> – Predictive alerts &
+                      adjustments.
+                    </li>
+                    <li>
+                      <b>Patient Feedback</b> – Surveys & improvement areas.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] px-4 py-3 flex flex-col items-center gap-y-4">
               <h1 className="text-[#00429E] lg:text-5xl text-xl font-bold">
@@ -611,7 +893,34 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Tele-Consultation
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Consultations & Referrals
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Teleconsultation</b> – Virtual care via video.
+                    </li>
+                    <li>
+                      <b>Face-to-Face Visits</b> – Efficient in-clinic
+                      management.
+                    </li>
+                    <li>
+                      <b>Referrals & Collaborations</b> – Seamless patient
+                      handovers.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] flex flex-col space-y-4 lg:px-4 px-2 py-3">
               <div className="flex justify-between">
@@ -673,7 +982,34 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Face-to-Face Visits
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Consultations & Referrals
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Teleconsultation</b> – Virtual care via video.
+                    </li>
+                    <li>
+                      <b>Face-to-Face Visits</b> – Efficient in-clinic
+                      management.
+                    </li>
+                    <li>
+                      <b>Referrals & Collaborations</b> – Seamless patient
+                      handovers.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] flex flex-col space-y-4 lg:px-4 px-2 py-3">
               <div className="flex justify-between">
@@ -735,7 +1071,34 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   Referral and Collaboration
                 </li>
               </ul>
-              <img src="/image28.png" alt="question mark" className="size-5" />
+              <div className="relative group inline-block">
+                {/* Question Mark Image */}
+                <img
+                  src="/image28.png"
+                  alt="question mark"
+                  className="size-5 cursor-pointer"
+                />
+
+                {/* Tooltip Content */}
+                <div className="absolute bottom-full mb-2  left-1/2 transform -translate-x-1/2  w-40 lg:w-60 bg-[#DEECFF] text-gray-700 text-sm shadow-lg rounded-lg p-4 hidden group-hover:block z-50">
+                  <h3 className="font-semibold text-[#00429E] mt-3">
+                    Consultations & Referrals
+                  </h3>
+                  <ul className="list-disc pl-5 text-[#0349A9E3]">
+                    <li>
+                      <b>Teleconsultation</b> – Virtual care via video.
+                    </li>
+                    <li>
+                      <b>Face-to-Face Visits</b> – Efficient in-clinic
+                      management.
+                    </li>
+                    <li>
+                      <b>Referrals & Collaborations</b> – Seamless patient
+                      handovers.
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div className="bg-[#DEECFF] flex flex-col gap-y-4 lg:px-4 px-2 py-3">
               <div className="flex justify-between ">

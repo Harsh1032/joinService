@@ -31,7 +31,7 @@ const Navbar = () => {
   }, [isMenuOpen]);
 
   return (
-    <nav className="w-full backdrop-blur-[12.5px] lg: bg-white flex px-5 lg:px-8 lg:py-3 py-2 items-center justify-between relative">
+    <nav className="w-full backdrop-blur-[12.5px] lg: bg-white flex px-5 lg:px-8 lg:py-3 py-2 items-center justify-between relative z-50">
       <img
         src="/Logo.png"
         alt="company logo"
@@ -135,10 +135,10 @@ const Navbar = () => {
         </a>{" "}
       </div>
       {/* Mobile Menu (below navbar) */}
-      {/* {isMenuOpen && (
-        <div className="fixed top-full left-0 w-full bg-black/80 text-white py-4 flex flex-col items-center z-[100] rounded-b-xl">
-          <a
-            href="#"
+      {isMenuOpen && (
+        <div className="fixed top-full left-0 w-full bg-black py-4 flex flex-col items-center z-[100] rounded-b-xl">
+          <Link
+            to='/'
             className={`text-2xl font-normal  ${
               selectedButton === "Home"
                 ? ""
@@ -147,9 +147,9 @@ const Navbar = () => {
             onClick={toggleMenu}
           >
             Home
-          </a>
+          </Link>
           <a
-            href="#"
+          href="#pricing"
             className={`text-2xl font-normal ${
               selectedButton === "Pricing"
                 ? ""
@@ -159,7 +159,7 @@ const Navbar = () => {
           >
             Pricing & Plans
           </a>
-          <a
+          {/* <a
             href="#"
             className={`text-2xl font-normal ${
               selectedButton === "Services"
@@ -169,9 +169,20 @@ const Navbar = () => {
             onClick={toggleMenu}
           >
             Find Services
-          </a>
+          </a> */}
+          <Link
+            to='/services'
+            className={`text-2xl font-normal ${
+              selectedButton === "Services"
+                ? ""
+                : "text-white"
+            }`}
+            onClick={toggleMenu}
+          >
+            Find Services
+          </Link>
           <a
-            href="#"
+          href="#aboutUs"
             className={`text-2xl font-normal ${
               selectedButton === "About"
                 ? ""
@@ -182,7 +193,7 @@ const Navbar = () => {
             About us
           </a>
           <a
-            href="#"
+          href="#contactUs"
             className={`text-2xl font-normal ${
               selectedButton === "Contact"
                 ? ""
@@ -193,7 +204,7 @@ const Navbar = () => {
             Contact us
           </a>{" "}
         </div>
-      )} */}
+      )}
     </nav>
   );
 };

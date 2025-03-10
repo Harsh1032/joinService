@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import MaxWidthWrapper from "../MaxWidthWrapper";
-import { CloudUpload, X } from "lucide-react";
+import { CloudUpload, Loader2, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
@@ -25,6 +25,8 @@ const AdminDshboard = () => {
   const [loading, setLoading] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null); // ✅ Track the selected doctor
   const [isEditing, setIsEditing] = useState(false); // ✅ Track form mode (Add or Edit)
+  const [filterName, setFilterName] = useState("");
+  const [filterLoading, setFilterLoading] = useState(false);
 
   // State to manage form fields and files
   const [formData, setFormData] = useState({
@@ -45,6 +47,36 @@ const AdminDshboard = () => {
       setDoctors(data.doctors || []);
     } catch (error) {
       console.error("Error fetching doctors:", error);
+    }
+  };
+
+  const handleFilterSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!filterName.trim()) {
+      toast.error("Filter name cannot be empty!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${baseurl}/api/filters/filters`, {
+        filterName,
+      });
+
+      if (response.data.success) {
+        toast.success("Filter Added Successfully!");
+        
+        // Emit event for real-time updates
+        socket.emit("newFilter", response.data.filter);
+
+        // Clear input field
+        setFilterName("");
+      } else {
+        toast.error("Failed to add filter.");
+      }
+    } catch (error) {
+      console.error("❌ Error Adding Filter:", error);
+      toast.error("Error adding filter.");
     }
   };
 
@@ -587,7 +619,10 @@ const AdminDshboard = () => {
                 : "ADD DOCTOR"}
             </button>
           </form>
-          <div className=" lg:w-[47%] w-[90%] bg-[#DEECFF] border-4 border-[#4D97FF] rounded-[14px] flex flex-col lg:mb-5 overflow-hidden">
+          <form
+            onSubmit={handleFilterSubmit}
+            className=" lg:w-[47%] w-[90%] bg-[#DEECFF] border-4 border-[#4D97FF] rounded-[14px] flex flex-col lg:mb-5 overflow-hidden"
+          >
             <div className="flex items-center justify-center bg-[#4D97FF] py-3 px-2 gap-x-4">
               <span className="font-medium lg:text-3xl text-center text-xl text-white uppercase">
                 MANAGE FILTERS
@@ -605,10 +640,12 @@ const AdminDshboard = () => {
             <div className="bg-white w-full flex flex-col lg:py-5 lg:px-5 p-2  space-y-4">
               <input
                 type="text"
+                value={filterName}
+                onChange={(e) => setFilterName(e.target.value)}
                 placeholder="Enter New Filter Here and Click Enter"
                 className="placeholder:text-[#0000006B] lg:placeholder:text-xl placeholder:text-base font-normal outline-none"
               />
-              <button className="bg-[#DFDFDF] w-fit flex space-x-3 px-4 py-1 rounded-[3px] border border-[#B6B6B6]">
+              {/* <button className="bg-[#DFDFDF] w-fit flex space-x-3 px-4 py-1 rounded-[3px] border border-[#B6B6B6]">
                 <span className="text-[#0000006B] text-base font-normal">
                   X
                 </span>
@@ -631,15 +668,15 @@ const AdminDshboard = () => {
                 <span className="text-[#0000006B] text-base font-normal">
                   Continence management
                 </span>
-              </button>
+              </button> */}
             </div>
 
-            <button className="bg-[#1D6BD7] p-3">
-              <span className="text-white font-medium lg:text-xl text-lg">
-                SAVE CHANGES
+            <button type="submit" className="bg-[#1D6BD7] p-3">
+              <span className="text-white font-medium lg:text-xl text-lg flex items-center justify-center">
+                {filterLoading ? <Loader2 className="size-4 animate-spin text-white"/> : "SAVE CHANGES"}
               </span>
             </button>
-          </div>
+          </form>
         </div>
         <div className="flex justify-between border-4 border-[#4D97FF] rounded-[14px] flex-col lg:w-full w-[90%] max-lg:mx-auto overflow-hidden">
           <div className="flex items-center justify-center bg-[#4D97FF] py-3 px-2 gap-x-4">

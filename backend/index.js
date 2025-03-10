@@ -6,6 +6,7 @@ const http = require("http"); // Required for socket.io
 const { Server } = require("socket.io");
 const applicantRoutes = require("./routes/applicantRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
+const filterRoutes = require("./routes/filterRoutes");
 
 const app = express();
 const server = http.createServer(app);
@@ -40,6 +41,7 @@ mongoose
 // 🔹 **Use Routes (AFTER MIDDLEWARE & DB Connection)**
 app.use("/api/applicants", applicantRoutes);// 
 app.use("/api/doctors", doctorRoutes);
+app.use("/api/filters", filterRoutes);
 
 // 🔹 **WebSocket Connection**
 io.on("connection", (socket) => {
