@@ -36,7 +36,11 @@ const AdminDshboard = () => {
     practiceType: "",
   });
 
-  const [profilePhoto, setProfilePhoto] = useState({ file: null, progress: 0 });
+  const [profilePhoto, setProfilePhoto] = useState({
+    file: null,
+    progress: 0,
+    url: null,
+  });
 
   const profilePhotoInputRef = useRef(null);
   // ✅ Fetch doctors from API and update state
@@ -52,7 +56,7 @@ const AdminDshboard = () => {
 
   const handleFilterSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!filterName.trim()) {
       toast.error("Filter name cannot be empty!");
       return;
@@ -65,7 +69,7 @@ const AdminDshboard = () => {
 
       if (response.data.success) {
         toast.success("Filter Added Successfully!");
-        
+
         // Emit event for real-time updates
         socket.emit("newFilter", response.data.filter);
 
@@ -266,6 +270,8 @@ const AdminDshboard = () => {
     }
   };
 
+  console.log(selectedDoctor)
+  console.log(profilePhoto)
   return (
     <div className="w-full min-h-screen bg-white ">
       <MaxWidthWrapper className="w-full gap-y-5 py-10 flex flex-col relative">
@@ -567,11 +573,21 @@ const AdminDshboard = () => {
                 ref={profilePhotoInputRef}
                 onChange={handleFileChange}
                 className="hidden"
-                required
+                // required
               />
               {/* Conditional Rendering */}
-              {!profilePhoto.file ? (
-                // Show default icon and text if no file is selected
+              {!profilePhoto.file && profilePhoto.url ? (
+                <div className="flex flex-col items-center gap-y-2">
+                  <img
+                    src={profilePhoto.url}
+                    alt="Existing Doctor"
+                    className="w-32 h-32 object-cover rounded-full border border-gray-300"
+                  />
+                  <span className="text-[#858585AD] text-lg">
+                    Click to change image
+                  </span>
+                </div>
+              ) : !profilePhoto.file ? (
                 <>
                   <CloudUpload className="text-[#858585] size-8" />
                   <span className="text-[#858585AD] text-lg">
@@ -673,7 +689,11 @@ const AdminDshboard = () => {
 
             <button type="submit" className="bg-[#1D6BD7] p-3">
               <span className="text-white font-medium lg:text-xl text-lg flex items-center justify-center">
-                {filterLoading ? <Loader2 className="size-4 animate-spin text-white"/> : "SAVE CHANGES"}
+                {filterLoading ? (
+                  <Loader2 className="size-4 animate-spin text-white" />
+                ) : (
+                  "SAVE CHANGES"
+                )}
               </span>
             </button>
           </form>
@@ -712,6 +732,12 @@ const AdminDshboard = () => {
                     onClick={() => {
                       setSelectedDoctor(doctor);
                       setFormData(doctor);
+                      setProfilePhoto({
+                        file: null,
+                        progress: 100,
+                        url: doctor.profilePhoto?.[0] || null, // 👈 Set previous image URL
+                      });
+
                       setIsEditing(true);
                     }}
                     className="bg-[#005EE2] w-fit rounded-[4px] py-1 px-4 lg:min-w-[150px] max-lg:h-[30px]"
