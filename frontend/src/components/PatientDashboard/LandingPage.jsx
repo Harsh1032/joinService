@@ -59,11 +59,11 @@ const landingPage = ({ isMenuOpen }) => {
           </div>
           <div className="flex items-center lg:gap-x-4 gap-x-2 justify-center rounded-b-[14px] bg-[#1D6BD7] border border-[#4D97FF] lg:py-3 py-2">
             <span className="font-medium lg:text-xl text-xs text-white">
-              CURRENT PLAN = STANDARD
+              TRACK YOUR AI STROKESMART PROGRESS
             </span>
             <button className="bg-[#4D97FF] rounded-[4px] py-2 px-3 w-fit text-center">
               <span className="font-medium lg:text-xl text-xs text-white">
-                UPGRADE PLAN
+                VIEW SUMMARY
               </span>
             </button>
           </div>
@@ -73,16 +73,15 @@ const landingPage = ({ isMenuOpen }) => {
           <div className=" lg:w-[47%] w-[90%] flex flex-col mb-5">
             <div className="flex items-center justify-center rounded-t-[14px] border-4 border-[#4D97FF] bg-[#4D97FF] py-3 px-2 gap-x-2">
               <span className="font-medium lg:text-3xl text-xl text-white">
-                UPCOMING APPOINMENT
+                UPCOMING APPOINTMENT
               </span>
             </div>
             <div className="bg-[#CFE3FF] py-2 lg:px-4 px-2 flex flex-col gap-y-1 border-x-4 border-[#4D97FF]">
               <span className="text-[#00429E] lg:text-2xl text-lg font-medium">
-                1. DR. MARYAM ANWAR
+                Dr. Emily Harrington
               </span>
               <span className="font-normal lg:text-lg text-base text-[#0349A9E3]">
-                94, Jalan Perjiranan 2, Bandar Dato Onn, Johor
-                <br /> Bahru, Johor
+                1245 Pinebrook Avenue, Springfield, IL 62704
                 <br />
                 Glucose Level Test
               </span>
@@ -104,11 +103,10 @@ const landingPage = ({ isMenuOpen }) => {
             </div>
             <div className="bg-[#DEECFF] py-2 lg:px-4 px-2 flex flex-col gap-y-1 border-x-4 border-[#4D97FF]">
               <span className="text-[#00429E] lg:text-2xl text-lg font-medium">
-                2. DR. NURUL ATIKAH
+                Dr. Marcus Delgado
               </span>
               <span className="font-normal lg:text-lg text-base text-[#0349A9E3]">
-                94, Jalan Perjiranan 2, Bandar Dato Onn, Johor
-                <br /> Bahru, Johor
+                7820 Willow Creek Drive, Austin, TX 78745                
                 <br />
                 Blood Pressure Level Test
               </span>
@@ -130,7 +128,7 @@ const landingPage = ({ isMenuOpen }) => {
             </div>
             <div className="flex items-center justify-center bg-[#1D6BD7] rounded-b-[14px] py-3 px-2 gap-x-2 border-x-4 border-[#4D97FF]">
               <span className="font-medium lg:text-3xl text-xl text-white">
-                VIEW PAST APPOINMENTS
+                VIEW PAST APPOINTMENTS
               </span>
             </div>
           </div>
@@ -146,9 +144,8 @@ const landingPage = ({ isMenuOpen }) => {
               </span>
               <span className="font-normal lg:text-lg text-base text-[#610101E3]">
                 Severe, High Level, Prescribed Glucose Level
-                <br /> Control Pills
                 <br />
-                Dr. Sam Willis
+                Dr. Olivia Bennett
               </span>
               <div className="flex items-center justify-between">
                 <div className="flex gap-x-2 items-center">
@@ -173,9 +170,8 @@ const landingPage = ({ isMenuOpen }) => {
               </span>
               <span className="font-normal lg:text-lg text-base text-[#610101A9]">
                 Very Good, No Pills Prescribed, Lorem Ipsum
-                <br /> Lorem Ipsum
                 <br />
-                Dr. Nurul Atikah
+                Dr. Nathaniel Rhodes
               </span>
               <div className="flex items-center justify-between">
                 <div className="flex gap-x-2 items-center">
@@ -195,7 +191,7 @@ const landingPage = ({ isMenuOpen }) => {
             </div>
             <div className="flex items-center justify-center bg-[#610101] rounded-b-[14px] py-3 px-2 gap-x-2 border-x-4 border-[#CB1111]">
               <span className="font-medium lg:text-3xl text-xl text-white">
-                VIEW PAST APPOINMENTS
+                VIEW PAST APPOINTMENTS
               </span>
             </div>
           </div>

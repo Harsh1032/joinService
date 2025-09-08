@@ -50,11 +50,11 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
             </div>
             <div className="flex items-center lg:gap-x-4 gap-x-2 justify-center rounded-b-[14px] bg-[#1D6BD7] border border-[#4D97FF] lg:py-3 py-2 ">
               <span className="font-medium lg:text-xl text-xs text-white">
-                CURRENT PLAN = STANDARD
+                TRACK YOUR PATIENT AI STROKESMART PROGRESS
               </span>
               <button className="bg-[#4D97FF] rounded-[4px] py-2 px-3 w-fit text-center">
                 <span className="font-medium lg:text-xl text-xs text-white">
-                  UPGRADE PLAN
+                  VIEW SUMMARY
                 </span>
               </button>
             </div>
@@ -112,7 +112,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
             <div className="bg-[#DEECFF] px-4 py-3 max-lg:space-y-2">
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  1. Mr. Muhammad Aiman
+                  1. Jason Whitmore
                 </span>
                 <div className="flex space-x-3">
                   <CalendarDays className="size-5 text-[#0349A9E3] font-normal" />
@@ -123,7 +123,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  2. Mr. Muhammad Safwan
+                  2. Sophia Tran
                 </span>
                 <div className="flex space-x-3 items-center">
                   <CalendarDays className="size-5 text-[#0349A9E3] font-normal" />
@@ -134,7 +134,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  3. Ms. Aina Aqilah
+                  3. Malik Johnson
                 </span>
                 <div className="flex space-x-3 items-center">
                   <CalendarDays className="size-5 text-[#0349A9E3] font-normal" />
@@ -145,7 +145,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  4. Ms. Sofea Syazwan
+                  4. Hannah Ruiz
                 </span>
                 <div className="flex space-x-3 items-center">
                   <CalendarDays className="size-5 text-[#0349A9E3] font-normal" />
@@ -194,7 +194,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
             <div className="bg-[#DEECFF] px-4 py-3 flex flex-col gap-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  1. Mr. Muhammad Aiman
+                  1. Jason Whitmore
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -207,7 +207,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  2. Mr. Muhammad Safwan
+                  2. Sophia Tran
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -220,7 +220,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  3. Ms. Aina Aqilah
+                  3. Malik Johnson
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -233,7 +233,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  4. Ms. Sofea Syazwan
+                  4. Hannah Ruiz
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -284,7 +284,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
             <div className="bg-[#DEECFF] flex flex-col gap-y-4 px-4 py-3">
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base w-full">
-                  1. Mr. Muhammad Aiman
+                  1. Jason Whitmore
                 </span>
                 <ChevronUp className="text-[#0349A9E3] size-5 font-normal" />
               </div>
@@ -316,19 +316,19 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </ul>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base w-full">
-                  2. Mr. Muhammad Safwan
+                  2. Sophia Tran
                 </span>
                 <ChevronDown className="text-[#0349A9E3] size-5 font-normal" />
               </div>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base w-full">
-                  3. Ms. Aina Aqilah
+                  3. Malik Johnson
                 </span>
                 <ChevronDown className="text-[#0349A9E3] size-5 font-normal" />
               </div>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base w-full">
-                  4. Ms. Sofea Syazwan
+                  4. Hannah Ruiz
                 </span>
                 <ChevronDown className="text-[#0349A9E3] size-5 font-normal" />
               </div>
@@ -388,7 +388,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   </span>
                 </div>
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base">
-                  RM 201.20
+                  USD 201.20
                 </span>
               </div>
               <div className="flex justify-between ">
@@ -399,7 +399,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   </span>
                 </div>
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base">
-                  RM 192.00
+                  USD 192.00
                 </span>
               </div>
               <div className="flex justify-between ">
@@ -410,7 +410,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   </span>
                 </div>
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base mr-[1.8%]">
-                  RM 99.10
+                  USD 99.10
                 </span>
               </div>
               <div className="flex justify-between ">
@@ -421,7 +421,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                   </span>
                 </div>
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base">
-                  RM 231.80
+                  USD 231.80
                 </span>
               </div>
             </div>
@@ -484,11 +484,11 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                     </td>
                     <td className="p-3 text-[#00429E] font-medium lg:text-lg text-sm">
                       {" "}
-                      RM 920.00{" "}
+                      USD 920.00{" "}
                     </td>
                     <td className="p-3 text-[#00429E] font-medium lg:text-lg text-sm">
                       {" "}
-                      RM 790.00
+                      USD 790.00
                     </td>
                   </tr>
                   <tr>
@@ -496,10 +496,10 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                       February{" "}
                     </td>
                     <td className="p-3 text-[#00429E] font-medium lg:text-lg text-sm">
-                      RM 1,900.00{" "}
+                      USD 1,900.00{" "}
                     </td>
                     <td className="p-3 text-[#00429E] font-medium lg:text-lg text-sm">
-                      RM 1,800.00
+                      USD 1,800.00
                     </td>
                   </tr>
                   <tr>
@@ -507,10 +507,10 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
                       March{" "}
                     </td>
                     <td className="p-3 text-[#00429E] font-medium lg:text-lg text-sm">
-                      RM 940.00{" "}
+                      USD 940.00{" "}
                     </td>
                     <td className="p-3 text-[#00429E] font-medium lg:text-lg text-sm">
-                      RM 720.00
+                      USD 720.00
                     </td>
                   </tr>
                 </tbody>
@@ -733,7 +733,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
             <div className="bg-[#DEECFF] px-4 py-3 flex flex-col gap-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  1. Mr. Muhammad Aiman
+                  1. Jason Whitmore
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -746,7 +746,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  2. Mr. Muhammad Safwan
+                  2. Sophia Tran
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -759,7 +759,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  3. Ms. Aina Aqilah
+                  3. Malik Johnson
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -772,7 +772,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-sm w-full">
-                  4. Ms. Sofea Syazwan
+                  4. Hannah Ruiz
                 </span>
                 <button
                   className="bg-[#4D97FF] py-1 lg:min-w-[210px] min-w-[150px] w-auto px-4 rounded-[4px] "
@@ -787,8 +787,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
             <div className="flex gap-x-4 w-full p-4 bg-[#CFE3FF] text-[#00429E] items-center justify-center">
               <ul className="square">
                 <li className="font-medium uppercase lg:text-2xl text-sm">
-                  AI-Driven Recommendations <br />
-                  and Care Plan
+                  AI STROKESMART CARE PLAN
                 </li>
               </ul>
               <div className="relative group inline-block">
@@ -1103,7 +1102,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
             <div className="bg-[#DEECFF] flex flex-col gap-y-4 lg:px-4 px-2 py-3">
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base  w-full">
-                  1. Mr. Muhammad Aiman
+                  1. Jason Whitmore
                 </span>
                 <ChevronUp className="text-[#0349A9E3] size-5 font-normal" />
               </div>
@@ -1135,19 +1134,19 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </ul>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base  w-full">
-                  2. Mr. Muhammad Safwan
+                  2. Sophia Tran
                 </span>
                 <ChevronDown className="text-[#0349A9E3] size-5 font-normal" />
               </div>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base  w-full">
-                  3. Ms. Aina Aqilah
+                  3. Malik Johnson
                 </span>
                 <ChevronDown className="text-[#0349A9E3] size-5 font-normal" />
               </div>
               <div className="flex justify-between ">
                 <span className="text-[#0349A9E3] font-medium lg:text-xl text-base  w-full">
-                  4. Ms. Sofea Syazwan
+                  4. Hannah Ruiz
                 </span>
                 <ChevronDown className="text-[#0349A9E3] size-5 font-normal" />
               </div>

@@ -1,211 +1,116 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Loader2, Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
-const Navbar = () => {
-  const [selectedButton, setSelectedButton] = useState("");
+const NavItem = ({ to, children, className = "" }) => (
+  <Link
+    to={to}
+    className={`text-[15px] md:text-[17px] font-medium text-slate-800 hover:text-blue-600 transition-colors ${className}`}
+  >
+    {children}
+  </Link>
+);
+
+const OutlineBtn = ({ to, children }) => (
+  <Link
+    to={to}
+    className="px-4 py-2 md:px-5 md:py-2.5 rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors text-[14px] md:text-[16px] font-medium"
+  >
+    {children}
+  </Link>
+);
+
+const SolidBtn = ({ to, children }) => (
+  <Link
+    to={to}
+    className="px-4 py-2 md:px-5 md:py-2.5 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors text-[14px] md:text-[16px] font-medium"
+  >
+    {children}
+  </Link>
+);
+
+const Navbar = ({ offsetTop = "0px" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
-  // Toggle menu on hamburger click
-  const toggleMenu = (event) => {
-    event.stopPropagation(); // Prevent event from bubbling up
-    setIsMenuOpen((prev) => !prev);
-  };
-
-  // Close menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        isMenuOpen &&
-        !event.target.closest(".navbar") &&
-        !event.target.closest(".menu-icon")
-      ) {
-        setIsMenuOpen(false);
-      }
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onDocClick = (e) => {
+      if (!isMenuOpen) return;
+      if (!e.target.closest?.("#navbar")) setIsMenuOpen(false);
     };
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => document.removeEventListener("click", handleClickOutside);
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
   }, [isMenuOpen]);
 
   return (
-    <nav className="w-full backdrop-blur-[12.5px] lg: bg-white flex px-5 lg:px-8 lg:py-3 py-2 items-center justify-between relative z-50">
-      <img
-        src="/Logo.png"
-        alt="company logo"
-        className="lg:w-[131px] lg:h-[69px] w-[67px] h-[36px]"
-      />
-      <div className="lg:hidden flex items-center mr-4">
-        <Menu className="text-black cursor-pointer" onClick={toggleMenu} />
-      </div>
+    <header
+      className="sticky w-full z-50"
+      style={{ top: offsetTop }}
+    >
+      <nav
+        id="navbar"
+        className="w-full bg-white/90 backdrop-blur-md border-b border-slate-200"
+      >
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          {/* Height: mobile h-14, desktop h-20 */}
+          <div className="h-14 md:h-20 flex items-center justify-between">
+            {/* Logo */}
+            <Link to="/#top" className="shrink-0 flex items-center gap-2">
+              <img
+                src="/Logo.png"
+                alt="company logo"
+                className="h-8 md:h-12 w-auto"
+              />
+            </Link>
 
-      <div className="lg:flex hidden gap-x-4">
-        {/* <Link to="/"> */}
-          <Link
-            to='/'
-            className={`text-2xl font-normal  ${
-              selectedButton === "Home"
-                ? "text-blue-600 underline"
-                : "text-black"
-            }`}
-            onClick={() => {
-              setSelectedButton("Home");
-            }}
-          >
-            Home
-          </Link>
-        {/* </Link> */}
-        <a
-          href="#pricing"
-          className={`text-2xl font-normal ${
-            selectedButton === "Pricing"
-              ? "text-blue-600 underline"
-              : "text-black"
-          }`}
-          onClick={(e) => {
-            e.preventDefault();
-            const pricingElement = document.getElementById("pricing");
-            if (pricingElement) {
-              pricingElement.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }
-            setSelectedButton("Pricing");
-          }}
-        >
-          Pricing & Plans
-        </a>
-        {/* <Link to="/services"> */}
-          <Link
-            to='/services'
-            className={`text-2xl font-normal ${
-              selectedButton === "Services"
-                ? "text-blue-600 underline"
-                : "text-black"
-            }`}
-            onClick={() => setSelectedButton("Services")}
-          >
-            Find Services
-          </Link>
-        {/* </Link> */}
-        <a
-          href="#aboutUs"
-          className={`text-2xl font-normal ${
-            selectedButton === "About"
-              ? "text-blue-600 underline"
-              : "text-black"
-          }`}
-          onClick={(e) => {
-            e.preventDefault();
-            const pricingElement = document.getElementById("aboutUs");
-            if (pricingElement) {
-              pricingElement.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }
-            setSelectedButton("About");
-          }}
-        >
-          About us
-        </a>
-        <a
-          href="#contactUs"
-          className={`text-2xl font-normal ${
-            selectedButton === "Contact"
-              ? "text-blue-600 underline"
-              : "text-black"
-          }`}
-          onClick={(e) => {
-            e.preventDefault();
-            const pricingElement = document.getElementById("contactUs");
-            if (pricingElement) {
-              pricingElement.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }
-            setSelectedButton("Contact");
-          }}
-        >
-          Contact us
-        </a>{" "}
-      </div>
-      {/* Mobile Menu (below navbar) */}
-      {isMenuOpen && (
-        <div className="fixed top-full left-0 w-full bg-black py-4 flex flex-col items-center z-[100] rounded-b-xl">
-          <Link
-            to='/'
-            className={`text-2xl font-normal  ${
-              selectedButton === "Home"
-                ? ""
-                : "text-white"
-            }`}
-            onClick={toggleMenu}
-          >
-            Home
-          </Link>
-          <a
-          href="#pricing"
-            className={`text-2xl font-normal ${
-              selectedButton === "Pricing"
-                ? ""
-                : "text-white"
-            }`}
-            onClick={toggleMenu}
-          >
-            Pricing & Plans
-          </a>
-          {/* <a
-            href="#"
-            className={`text-2xl font-normal ${
-              selectedButton === "Services"
-                ? ""
-                : "text-white"
-            }`}
-            onClick={toggleMenu}
-          >
-            Find Services
-          </a> */}
-          <Link
-            to='/services'
-            className={`text-2xl font-normal ${
-              selectedButton === "Services"
-                ? ""
-                : "text-white"
-            }`}
-            onClick={toggleMenu}
-          >
-            Find Services
-          </Link>
-          <a
-          href="#aboutUs"
-            className={`text-2xl font-normal ${
-              selectedButton === "About"
-                ? ""
-                : "text-white"
-            }`}
-            onClick={toggleMenu}
-          >
-            About us
-          </a>
-          <a
-          href="#contactUs"
-            className={`text-2xl font-normal ${
-              selectedButton === "Contact"
-                ? ""
-                : "text-white"
-            }`}
-            onClick={toggleMenu}
-          >
-            Contact us
-          </a>{" "}
+            {/* Desktop nav */}
+            <div className="hidden lg:flex items-center gap-8">
+              <NavItem to="/#top">Home</NavItem>
+              <NavItem to="/#pricing">Pricing &amp; Plans</NavItem>
+              <NavItem to="/services">Find Services</NavItem>
+              <NavItem to="/#aboutUs">About us</NavItem>
+              <NavItem to="/#contactUs">Contact us</NavItem>
+
+              <div className="ml-4 h-6 w-px bg-slate-200" />
+
+              <OutlineBtn to="/patientDashboard">Patient Dashboard</OutlineBtn>
+              <SolidBtn to="/serviceProviderDashboard">Service Dashboard</SolidBtn>
+            </div>
+
+            {/* Mobile toggle */}
+            <button
+              className="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-md hover:bg-slate-100"
+              onClick={() => setIsMenuOpen((v) => !v)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
-      )}
-    </nav>
+
+        {/* Mobile sheet */}
+        {isMenuOpen && (
+          <div className="lg:hidden border-t border-slate-200 bg-white">
+            <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3">
+              <NavItem to="/#top">Home</NavItem>
+              <NavItem to="/#pricing">Pricing &amp; Plans</NavItem>
+              <NavItem to="/services">Find Services</NavItem>
+              <NavItem to="/#aboutUs">About us</NavItem>
+              <NavItem to="/#contactUs">Contact us</NavItem>
+
+              <div className="h-0.5 bg-slate-100 my-1" />
+
+              <OutlineBtn to="/patientDashboard">Patient Dashboard</OutlineBtn>
+              <SolidBtn to="/serviceProviderDashboard">Service Dashboard</SolidBtn>
+            </div>
+          </div>
+        )}
+      </nav>
+    </header>
   );
 };
 
