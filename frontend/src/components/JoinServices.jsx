@@ -6,24 +6,10 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const options = [
-  { value: "Verified", label: "Verified" },
-  { value: "Pending", label: "Pending" },
-];
-const options2 = [
-  { value: "Pending", label: "Pending" },
-  { value: "Approved", label: "Approved" },
-  { value: "Rejected", label: "Rejected" },
-];
-const options3 = [
-  { value: "Certified", label: "Certified" },
-  { value: "Not Certified", label: "Not Certified" },
-];
 const options4 = [
   { value: "Private Clinic", label: "Private Clinic" },
   { value: "Telehealth", label: "Telehealth" },
 ];
-
 
 const baseurl = import.meta.env.VITE_BASE_URL;
 // Ensure a single socket connection (outside component to prevent multiple connections)
@@ -38,11 +24,8 @@ const JoinServices = () => {
     fullName: "",
     specialization: "",
     yearsOfExperience: "",
-    certificationStatus: "",
-    applicationStatus: "",
     medicalDegree: "",
     mmcRegistrationNumber: "",
-    geriatricCertification: "",
     practiceType: "",
   });
 
@@ -149,11 +132,8 @@ const JoinServices = () => {
     form.append("fullName", formData.fullName);
     form.append("specialization", formData.specialization);
     form.append("yearsOfExperience", formData.yearsOfExperience);
-    form.append("certificationStatus", formData.certificationStatus);
-    form.append("applicationStatus", formData.applicationStatus);
     form.append("medicalDegree", formData.medicalDegree);
     form.append("mmcRegistrationNumber", formData.mmcRegistrationNumber);
-    form.append("geriatricCertification", formData.geriatricCertification);
     form.append("practiceType", formData.practiceType);
 
     // Append files to FormData
@@ -200,11 +180,8 @@ const JoinServices = () => {
       fullName: "",
       specialization: "",
       yearsOfExperience: "",
-      certificationStatus: "",
-      applicationStatus: "",
       medicalDegree: "",
       mmcRegistrationNumber: "",
-      geriatricCertification: "",
       practiceType: "",
     });
   };
@@ -243,7 +220,7 @@ const JoinServices = () => {
               placeholder="Dr. [Name]"
             />
             <div className="flex lg:flex-row flex-col gap-x-4 max-lg:gap-y-2">
-              <div className="flex flex-col gap-y-2 lg:w-[45%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[50%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   Specialization
                 </label>
@@ -257,7 +234,7 @@ const JoinServices = () => {
                   placeholder="Geriatric Care"
                 />
               </div>
-              <div className="flex flex-col gap-y-2 lg:w-[20%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[50%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   Years of Experience
                 </label>
@@ -271,140 +248,14 @@ const JoinServices = () => {
                   placeholder="X years"
                 />
               </div>
-              <div className="flex flex-col gap-y-2 lg:w-[35%] w-full">
-                <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
-                  Certification Status
-                </label>
-                <Select
-                  options={options}
-                  className="react-select"
-                  classNamePrefix="react-select"
-                  value={options.find(
-                    (option) => option.value === formData.certificationStatus
-                  )}
-                  onChange={(selectedOption) =>
-                    setFormData({
-                      ...formData,
-                      certificationStatus: selectedOption.value,
-                    })
-                  }
-                  required
-                  placeholder="Verified/Pending"
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      // Use Tailwind classes via `className`
-                      width: "100%",
-                      padding: "6px",
-                      borderRadius: "4px",
-                      borderColor: "#CDCDCD",
-                      backgroundColor: "transparent",
-                    }),
-                    option: (provided, state) => ({
-                      ...provided,
-                      color: state.isSelected ? "#fff" : "#858585AD",
-                      backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
-                      fontSize: "20px",
-                      fontWeight: "normal",
-                    }),
-                    singleValue: (provided) => ({
-                      ...provided,
-                      color: "#858585",
-                    }),
-                  }}
-                />
-              </div>
             </div>
-            <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
-              Application Status
-            </label>
-            <Select
-              options={options2}
-              className="react-select lg:flex hidden"
-              classNamePrefix="react-select"
-              value={options.find(
-                (option) => option.value === formData.applicationStatus
-              )}
-              onChange={(selectedOption) =>
-                setFormData({
-                  ...formData,
-                  applicationStatus: selectedOption.value,
-                })
-              }
-              required
-              placeholder="Pending / Approved / Rejected "
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  // Use Tailwind classes via `className`
-                  width: "44%",
-                  padding: "6px",
-                  borderRadius: "4px",
-                  borderColor: "#CDCDCD",
-                  backgroundColor: "transparent",
-                }),
-                menu: (provided) => ({
-                  ...provided,
-                  width: "44%", // Match the control width
-                }),
-                option: (provided, state) => ({
-                  ...provided,
-                  color: state.isSelected ? "#fff" : "#858585AD",
-                  backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
-                  fontSize: "20px",
-                  fontWeight: "normal",
-                }),
-                singleValue: (provided) => ({
-                  ...provided,
-                  color: "#858585",
-                }),
-              }}
-            />
-            <Select
-              options={options2}
-              className="react-select lg:hidden"
-              classNamePrefix="react-select"
-              value={options.find(
-                (option) => option.value === formData.applicationStatus
-              )}
-              onChange={(selectedOption) =>
-                setFormData({
-                  ...formData,
-                  applicationStatus: selectedOption.value,
-                })
-              }
-              required
-              placeholder="Pending / Approved / Rejected "
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  // Use Tailwind classes via `className`
-                  width: "100%",
-                  padding: "6px",
-                  borderRadius: "4px",
-                  borderColor: "#CDCDCD",
-                  backgroundColor: "transparent",
-                }),
-                option: (provided, state) => ({
-                  ...provided,
-                  color: state.isSelected ? "#fff" : "#858585AD",
-                  backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
-                  fontSize: "20px",
-                  fontWeight: "normal",
-                }),
-                singleValue: (provided) => ({
-                  ...provided,
-                  color: "#858585",
-                }),
-              }}
-            />
           </div>
           <div className="flex flex-col max-lg:w-[90%] max-lg:mx-auto  gap-y-2">
             <span className="lg:text-3xl text-xl max-lg:text-center font-medium mb-4 uppercase">
               Professional Credentials
             </span>
             <div className="flex lg:flex-row flex-col gap-x-4 max-lg:gap-y-2">
-              <div className="flex flex-col gap-y-2 lg:w-[45%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[60%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   Medical Degree
                 </label>
@@ -418,7 +269,7 @@ const JoinServices = () => {
                   placeholder="MBBS, XYZ University "
                 />
               </div>
-              <div className="flex flex-col gap-y-2 lg:w-[27.5%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[40%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   MMC Registration Number
                 </label>
@@ -432,49 +283,6 @@ const JoinServices = () => {
                   placeholder="XXXXXXX"
                 />
               </div>
-              <div className="flex flex-col gap-y-2 lg:w-[27.5%] w-full">
-                <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
-                  Geriatric Certification
-                </label>
-                <Select
-                  options={options3}
-                  className="react-select"
-                  classNamePrefix="react-select"
-                  value={options.find(
-                    (option) => option.value === formData.geriatricCertification
-                  )}
-                  onChange={(selectedOption) =>
-                    setFormData({
-                      ...formData,
-                      geriatricCertification: selectedOption.value,
-                    })
-                  }
-                  required
-                  placeholder="Certified/ Not Certified"
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      // Use Tailwind classes via `className`
-                      width: "100%",
-                      padding: "6px",
-                      borderRadius: "4px",
-                      borderColor: "#CDCDCD",
-                      backgroundColor: "transparent",
-                    }),
-                    option: (provided, state) => ({
-                      ...provided,
-                      color: state.isSelected ? "#fff" : "#858585AD",
-                      backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
-                      fontSize: "20px",
-                      fontWeight: "normal",
-                    }),
-                    singleValue: (provided) => ({
-                      ...provided,
-                      color: "#858585",
-                    }),
-                  }}
-                />
-              </div>
             </div>
             <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
               Practice Type
@@ -483,7 +291,7 @@ const JoinServices = () => {
               options={options4}
               className="react-select lg:flex hidden"
               classNamePrefix="react-select"
-              value={options.find(
+              value={options4.find(
                 (option) => option.value === formData.practiceType
               )}
               onChange={(selectedOption) =>
@@ -525,7 +333,7 @@ const JoinServices = () => {
               options={options4}
               className="react-select lg:hidden"
               classNamePrefix="react-select"
-              value={options.find(
+              value={options4.find(
                 (option) => option.value === formData.practiceType
               )}
               onChange={(selectedOption) =>
@@ -568,7 +376,7 @@ const JoinServices = () => {
               <span className="text-xl font-normal">Medical License</span>
               <div
                 onClick={() => medicalLicenseInputRef.current.click()} // Trigger file input click
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
               >
                 <input
                   type="file"
@@ -629,7 +437,7 @@ const JoinServices = () => {
 
               <div
                 onClick={() => geriatricCertificationInputRef.current.click()}
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
               >
                 <input
                   type="file"
@@ -684,7 +492,7 @@ const JoinServices = () => {
 
               <div
                 onClick={() => indemnityInsuranceInputRef.current.click()}
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
               >
                 <input
                   type="file"
@@ -737,7 +545,7 @@ const JoinServices = () => {
 
               <div
                 onClick={() => profilePhotoInputRef.current.click()}
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
               >
                 <input
                   type="file"
@@ -787,7 +595,7 @@ const JoinServices = () => {
           <button
             type="submit"
             onClick={handleSubmit}
-            className="bg-[#005EE2] rounded-[4px] border border-[#4D97FF] p-4 flex items-center justify-center text-center max-lg:w-[90%] max-lg:mx-auto"
+            className="bg-[#005EE2] rounded-[4px] border border-[#4D97FF] p-4 flex items-center justify-center text-center max-lg:w-[90%] max-lg:mx-auto cursor-pointer"
           >
             {loading ? (
               <>
