@@ -6,12 +6,14 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { io } from "socket.io-client";
 
+// Keep only Practice Type options (we removed the other three dropdowns)
 const options4 = [
   { value: "Private Clinic", label: "Private Clinic" },
   { value: "Telehealth", label: "Telehealth" },
 ];
 
 const baseurl = import.meta.env.VITE_BASE_URL;
+
 // Ensure a single socket connection (outside component to prevent multiple connections)
 const socket = io(baseurl, {
   transports: ["websocket", "polling"],
@@ -24,8 +26,11 @@ const JoinServices = () => {
     fullName: "",
     specialization: "",
     yearsOfExperience: "",
+    certificationStatus: "",      // kept (hidden) -> send as empty string
+    applicationStatus: "",        // kept (hidden) -> send as empty string
     medicalDegree: "",
     mmcRegistrationNumber: "",
+    geriatricCertification: "",   // kept (hidden) -> send as empty string
     practiceType: "",
   });
 
@@ -132,8 +137,11 @@ const JoinServices = () => {
     form.append("fullName", formData.fullName);
     form.append("specialization", formData.specialization);
     form.append("yearsOfExperience", formData.yearsOfExperience);
+    form.append("certificationStatus", formData.certificationStatus); // empty string
+    form.append("applicationStatus", formData.applicationStatus);     // empty string
     form.append("medicalDegree", formData.medicalDegree);
     form.append("mmcRegistrationNumber", formData.mmcRegistrationNumber);
+    form.append("geriatricCertification", formData.geriatricCertification); // empty string
     form.append("practiceType", formData.practiceType);
 
     // Append files to FormData
@@ -154,8 +162,6 @@ const JoinServices = () => {
       );
 
       if (response.data.success) {
-        // Emit an event to the server via Socket.io after successful submission
-        // socket.emit("newApplicant", response.data.applicant);
         // Handle successful submission
         toast.success("Application submitted successfully!");
         // Reset everything after successful submission
@@ -180,8 +186,11 @@ const JoinServices = () => {
       fullName: "",
       specialization: "",
       yearsOfExperience: "",
+      certificationStatus: "",
+      applicationStatus: "",
       medicalDegree: "",
       mmcRegistrationNumber: "",
+      geriatricCertification: "",
       practiceType: "",
     });
   };
@@ -203,6 +212,7 @@ const JoinServices = () => {
       </h1>
       <div className="w-full bg-white min-h-screen py-10">
         <MaxWidthWrapper className="flex flex-col gap-y-5">
+          {/* Applicant Summary */}
           <div className="flex flex-col max-lg:w-[90%] max-lg:mx-auto gap-y-2">
             <span className="lg:text-3xl text-xl max-lg:text-center font-medium mb-4 uppercase">
               Applicant Summary
@@ -220,7 +230,7 @@ const JoinServices = () => {
               placeholder="Dr. [Name]"
             />
             <div className="flex lg:flex-row flex-col gap-x-4 max-lg:gap-y-2">
-              <div className="flex flex-col gap-y-2 lg:w-[50%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[45%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   Specialization
                 </label>
@@ -234,7 +244,7 @@ const JoinServices = () => {
                   placeholder="Geriatric Care"
                 />
               </div>
-              <div className="flex flex-col gap-y-2 lg:w-[50%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[20%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   Years of Experience
                 </label>
@@ -250,12 +260,14 @@ const JoinServices = () => {
               </div>
             </div>
           </div>
+
+          {/* Professional Credentials */}
           <div className="flex flex-col max-lg:w-[90%] max-lg:mx-auto  gap-y-2">
             <span className="lg:text-3xl text-xl max-lg:text-center font-medium mb-4 uppercase">
               Professional Credentials
             </span>
             <div className="flex lg:flex-row flex-col gap-x-4 max-lg:gap-y-2">
-              <div className="flex flex-col gap-y-2 lg:w-[60%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[45%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   Medical Degree
                 </label>
@@ -269,7 +281,7 @@ const JoinServices = () => {
                   placeholder="MBBS, XYZ University "
                 />
               </div>
-              <div className="flex flex-col gap-y-2 lg:w-[40%] w-full">
+              <div className="flex flex-col gap-y-2 lg:w-[27.5%] w-full">
                 <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
                   MMC Registration Number
                 </label>
@@ -284,12 +296,14 @@ const JoinServices = () => {
                 />
               </div>
             </div>
+
+            {/* Practice Type (Select kept) */}
             <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
               Practice Type
             </label>
             <Select
               options={options4}
-              className="react-select lg:flex hidden"
+              className="react-select"
               classNamePrefix="react-select"
               value={options4.find(
                 (option) => option.value === formData.practiceType
@@ -305,49 +319,6 @@ const JoinServices = () => {
               styles={{
                 control: (provided) => ({
                   ...provided,
-                  // Use Tailwind classes via `className`
-                  width: "44%",
-                  padding: "6px",
-                  borderRadius: "4px",
-                  borderColor: "#CDCDCD",
-                  backgroundColor: "transparent",
-                }),
-                menu: (provided) => ({
-                  ...provided,
-                  width: "44%", // Match the control width
-                }),
-                option: (provided, state) => ({
-                  ...provided,
-                  color: state.isSelected ? "#fff" : "#858585AD",
-                  backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
-                  fontSize: "20px",
-                  fontWeight: "normal",
-                }),
-                singleValue: (provided) => ({
-                  ...provided,
-                  color: "#858585",
-                }),
-              }}
-            />
-            <Select
-              options={options4}
-              className="react-select lg:hidden"
-              classNamePrefix="react-select"
-              value={options4.find(
-                (option) => option.value === formData.practiceType
-              )}
-              onChange={(selectedOption) =>
-                setFormData({
-                  ...formData,
-                  practiceType: selectedOption.value,
-                })
-              }
-              required
-              placeholder="Private Clinic/ Telehealth"
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  // Use Tailwind classes via `className`
                   width: "100%",
                   padding: "6px",
                   borderRadius: "4px",
@@ -368,15 +339,19 @@ const JoinServices = () => {
               }}
             />
           </div>
+
+          {/* Supporting Documents */}
           <div className="flex flex-col mt-1 gap-y-4 max-lg:w-[90%] max-lg:mx-auto">
             <span className="lg:text-3xl text-xl max-lg:text-center  font-medium mb-4 uppercase">
               Supporting Documents
             </span>
+
+            {/* Medical License */}
             <div className="flex flex-col gap-y-2">
               <span className="text-xl font-normal">Medical License</span>
               <div
                 onClick={() => medicalLicenseInputRef.current.click()} // Trigger file input click
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
               >
                 <input
                   type="file"
@@ -429,6 +404,8 @@ const JoinServices = () => {
                 </div>
               )}
           </div>
+
+          {/* Geriatric Certification (file upload remains even if dropdown removed) */}
           <div className="flex flex-col gap-y-4 max-lg:w-[90%] max-lg:mx-auto">
             <div className="flex flex-col gap-y-2">
               <span className="text-xl font-normal">
@@ -437,7 +414,7 @@ const JoinServices = () => {
 
               <div
                 onClick={() => geriatricCertificationInputRef.current.click()}
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
               >
                 <input
                   type="file"
@@ -486,13 +463,15 @@ const JoinServices = () => {
                 </div>
               )}
           </div>
+
+          {/* Indemnity Insurance */}
           <div className="flex flex-col gap-y-4 max-lg:w-[90%] max-lg:mx-auto">
             <div className="flex flex-col gap-y-2">
               <span className="text-xl font-normal">Indemnity Insurance</span>
 
               <div
                 onClick={() => indemnityInsuranceInputRef.current.click()}
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
               >
                 <input
                   type="file"
@@ -539,13 +518,15 @@ const JoinServices = () => {
                 </div>
               )}
           </div>
+
+          {/* Profile Photo */}
           <div className="flex flex-col gap-y-4 max-lg:w-[90%] max-lg:mx-auto">
             <div className="flex flex-col gap-y-2">
               <span className="text-xl font-normal">Profile Photo</span>
 
               <div
                 onClick={() => profilePhotoInputRef.current.click()}
-                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px] cursor-pointer"
+                className="flex flex-col items-center justify-center gap-y-2 w-full border border-[#CDCDCD] min-h-[150px] h-auto rounded-[4px]"
               >
                 <input
                   type="file"
@@ -592,10 +573,12 @@ const JoinServices = () => {
                 </div>
               )}
           </div>
+
+          {/* Submit */}
           <button
             type="submit"
             onClick={handleSubmit}
-            className="bg-[#005EE2] rounded-[4px] border border-[#4D97FF] p-4 flex items-center justify-center text-center max-lg:w-[90%] max-lg:mx-auto cursor-pointer"
+            className="bg-[#005EE2] rounded-[4px] border border-[#4D97FF] p-4 flex items-center justify-center text-center max-lg:w-[90%] max-lg:mx-auto"
           >
             {loading ? (
               <>
