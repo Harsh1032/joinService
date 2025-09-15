@@ -271,9 +271,133 @@ const JoinServices = () => {
                   placeholder="X years"
                 />
               </div>
-              
+              <div className="flex flex-col gap-y-2 lg:w-[35%] w-full">
+                <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
+                  Certification Status
+                </label>
+                <Select
+                  options={options}
+                  className="react-select"
+                  classNamePrefix="react-select"
+                  value={options.find(
+                    (option) => option.value === formData.certificationStatus
+                  )}
+                  onChange={(selectedOption) =>
+                    setFormData({
+                      ...formData,
+                      certificationStatus: selectedOption.value,
+                    })
+                  }
+                  required
+                  placeholder="Verified/Pending"
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      // Use Tailwind classes via `className`
+                      width: "100%",
+                      padding: "6px",
+                      borderRadius: "4px",
+                      borderColor: "#CDCDCD",
+                      backgroundColor: "transparent",
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      color: state.isSelected ? "#fff" : "#858585AD",
+                      backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
+                      fontSize: "20px",
+                      fontWeight: "normal",
+                    }),
+                    singleValue: (provided) => ({
+                      ...provided,
+                      color: "#858585",
+                    }),
+                  }}
+                />
+              </div>
             </div>
-            
+            <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
+              Application Status
+            </label>
+            <Select
+              options={options2}
+              className="react-select lg:flex hidden"
+              classNamePrefix="react-select"
+              value={options.find(
+                (option) => option.value === formData.applicationStatus
+              )}
+              onChange={(selectedOption) =>
+                setFormData({
+                  ...formData,
+                  applicationStatus: selectedOption.value,
+                })
+              }
+              required
+              placeholder="Pending / Approved / Rejected "
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  // Use Tailwind classes via `className`
+                  width: "44%",
+                  padding: "6px",
+                  borderRadius: "4px",
+                  borderColor: "#CDCDCD",
+                  backgroundColor: "transparent",
+                }),
+                menu: (provided) => ({
+                  ...provided,
+                  width: "44%", // Match the control width
+                }),
+                option: (provided, state) => ({
+                  ...provided,
+                  color: state.isSelected ? "#fff" : "#858585AD",
+                  backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
+                  fontSize: "20px",
+                  fontWeight: "normal",
+                }),
+                singleValue: (provided) => ({
+                  ...provided,
+                  color: "#858585",
+                }),
+              }}
+            />
+            <Select
+              options={options2}
+              className="react-select lg:hidden"
+              classNamePrefix="react-select"
+              value={options.find(
+                (option) => option.value === formData.applicationStatus
+              )}
+              onChange={(selectedOption) =>
+                setFormData({
+                  ...formData,
+                  applicationStatus: selectedOption.value,
+                })
+              }
+              required
+              placeholder="Pending / Approved / Rejected "
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  // Use Tailwind classes via `className`
+                  width: "100%",
+                  padding: "6px",
+                  borderRadius: "4px",
+                  borderColor: "#CDCDCD",
+                  backgroundColor: "transparent",
+                }),
+                option: (provided, state) => ({
+                  ...provided,
+                  color: state.isSelected ? "#fff" : "#858585AD",
+                  backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
+                  fontSize: "20px",
+                  fontWeight: "normal",
+                }),
+                singleValue: (provided) => ({
+                  ...provided,
+                  color: "#858585",
+                }),
+              }}
+            />
           </div>
           <div className="flex flex-col max-lg:w-[90%] max-lg:mx-auto  gap-y-2">
             <span className="lg:text-3xl text-xl max-lg:text-center font-medium mb-4 uppercase">
@@ -307,7 +431,50 @@ const JoinServices = () => {
                   className="border border-[#CDCDCD] p-3 rounded-[4px] placeholder:text-[#858585AD] placeholder:text-lg"
                   placeholder="XXXXXXX"
                 />
-              </div>             
+              </div>
+              <div className="flex flex-col gap-y-2 lg:w-[27.5%] w-full">
+                <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
+                  Geriatric Certification
+                </label>
+                <Select
+                  options={options3}
+                  className="react-select"
+                  classNamePrefix="react-select"
+                  value={options.find(
+                    (option) => option.value === formData.geriatricCertification
+                  )}
+                  onChange={(selectedOption) =>
+                    setFormData({
+                      ...formData,
+                      geriatricCertification: selectedOption.value,
+                    })
+                  }
+                  required
+                  placeholder="Certified/ Not Certified"
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      // Use Tailwind classes via `className`
+                      width: "100%",
+                      padding: "6px",
+                      borderRadius: "4px",
+                      borderColor: "#CDCDCD",
+                      backgroundColor: "transparent",
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      color: state.isSelected ? "#fff" : "#858585AD",
+                      backgroundColor: state.isSelected ? "#3B82F6" : "#fff",
+                      fontSize: "20px",
+                      fontWeight: "normal",
+                    }),
+                    singleValue: (provided) => ({
+                      ...provided,
+                      color: "#858585",
+                    }),
+                  }}
+                />
+              </div>
             </div>
             <label className="font-normal lg:text-2xl text-xl text-[#000000AD]">
               Practice Type
