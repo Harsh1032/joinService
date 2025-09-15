@@ -70,8 +70,9 @@ const Navbar = ({ offsetTop = "0px" }) => {
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-8">
               <NavItem to="/#top">Home</NavItem>
-              <NavItem to="/#pricing">Pricing &amp; Plans</NavItem>
+              <NavItem to="/#pricing">Pricing</NavItem>
               <NavItem to="/services">Find Services</NavItem>
+              <NavItem to="/joinservices">Join Services</NavItem>
               <NavItem to="/#aboutUs">About us</NavItem>
               <NavItem to="/#contactUs">Contact us</NavItem>
 
