@@ -6,7 +6,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { io } from "socket.io-client";
 
-// Keep only Practice Type options (we removed the other three dropdowns)
+// Keep only Practice Type options
 const options4 = [
   { value: "Private Clinic", label: "Private Clinic" },
   { value: "Telehealth", label: "Telehealth" },
@@ -20,17 +20,23 @@ const socket = io(baseurl, {
   withCredentials: true, // Ensure proper CORS handling
 });
 
+const DEFAULTS = {
+  certificationStatus: "Pending",
+  applicationStatus: "Pending",
+  geriatricCertification: "Not Certified",
+};
+
 const JoinServices = () => {
   // State to manage form fields and files
   const [formData, setFormData] = useState({
     fullName: "",
     specialization: "",
     yearsOfExperience: "",
-    certificationStatus: "",      // kept (hidden) -> send as empty string
-    applicationStatus: "",        // kept (hidden) -> send as empty string
+    certificationStatus: DEFAULTS.certificationStatus, // send defaults instead of empty
+    applicationStatus: DEFAULTS.applicationStatus,     // send defaults instead of empty
     medicalDegree: "",
     mmcRegistrationNumber: "",
-    geriatricCertification: "",   // kept (hidden) -> send as empty string
+    geriatricCertification: DEFAULTS.geriatricCertification, // send defaults instead of empty
     practiceType: "",
   });
 
@@ -137,11 +143,11 @@ const JoinServices = () => {
     form.append("fullName", formData.fullName);
     form.append("specialization", formData.specialization);
     form.append("yearsOfExperience", formData.yearsOfExperience);
-    form.append("certificationStatus", formData.certificationStatus); // empty string
-    form.append("applicationStatus", formData.applicationStatus);     // empty string
+    form.append("certificationStatus", formData.certificationStatus); // default value
+    form.append("applicationStatus", formData.applicationStatus);     // default value
     form.append("medicalDegree", formData.medicalDegree);
     form.append("mmcRegistrationNumber", formData.mmcRegistrationNumber);
-    form.append("geriatricCertification", formData.geriatricCertification); // empty string
+    form.append("geriatricCertification", formData.geriatricCertification); // default value
     form.append("practiceType", formData.practiceType);
 
     // Append files to FormData
@@ -154,6 +160,13 @@ const JoinServices = () => {
     if (files.profilePhoto.file)
       form.append("profilePhoto", files.profilePhoto.file);
 
+    // Log payload for quick debugging
+    try {
+      for (let [k, v] of form.entries()) {
+        console.log("Form entry:", k, v);
+      }
+    } catch {}
+
     try {
       const response = await axios.post(
         `${baseurl}/api/applicants`, // Update with your backend API URL
@@ -162,14 +175,11 @@ const JoinServices = () => {
       );
 
       if (response.data.success) {
-        // Handle successful submission
         toast.success("Application submitted successfully!");
-        // Reset everything after successful submission
         resetFormState();
         resetFileState();
         setLoading(false);
       } else {
-        // Handle failure
         toast.error("Failed to submit the application.");
         setLoading(false);
       }
@@ -186,11 +196,11 @@ const JoinServices = () => {
       fullName: "",
       specialization: "",
       yearsOfExperience: "",
-      certificationStatus: "",
-      applicationStatus: "",
+      certificationStatus: DEFAULTS.certificationStatus,
+      applicationStatus: DEFAULTS.applicationStatus,
       medicalDegree: "",
       mmcRegistrationNumber: "",
-      geriatricCertification: "",
+      geriatricCertification: DEFAULTS.geriatricCertification,
       practiceType: "",
     });
   };
