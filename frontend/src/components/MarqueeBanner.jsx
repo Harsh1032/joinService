@@ -13,7 +13,7 @@ import React from "react";
  * - zIndex: string -> CSS z-index when sticky (default "60")
  */
 export default function MarqueeBanner({
-  text = "Connected Stroke Care. For Patients. For Families. For Life.",
+  text = "StrokeSMART is an AI-powered collaboration platform turning stroke rehab into measurable, affordable, and connected care for a better quality of life.",
   bg = "#E8F1FF",          // light blue like your screenshot
   color = "#1E56D9",       // blue text
   height = "44px",

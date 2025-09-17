@@ -14,12 +14,12 @@ const Footer = () => {
               className="lg:w-[131px] lg:h-[69px] w-[105px] h-[55px]"
             />
             <p className="lg:text-2xl text-xs text-[#AFAFAF] max-lg:text-center font-normal lg:pl-3">
-              Lorem ipsum dolor sit amet, consect
-              <br />
-              etur adipiscing elit, sed do eiu
-              <br />
-              smod tempor incididunt ut labor
-            </p>
+  AI-powered stroke recovery platform
+  <br />
+  connecting patients, families, and care
+  <br />
+  teams with personalized rehab plans
+</p>
             <img
               src="/socialMedia.png"
               alt="social media icons"

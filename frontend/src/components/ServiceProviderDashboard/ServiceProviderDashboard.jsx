@@ -34,7 +34,7 @@ const ServiceProviderDashboard = ({ isMenuOpen }) => {
               </div>
               <div className="flex flex-col gap-y-2 max-w-[50%]">
                 <span className="text-[#00429E] lg:text-2xl text-lg font-medium">
-                  Hi Dr. Ruban Chan!
+                  Hi Dr. Matt Barnes!
                 </span>
                 <p className="text-[#0349A9E3] font-normal lg:text-xl text-base">
                   Welcome to your service provider dashboard! Manage your

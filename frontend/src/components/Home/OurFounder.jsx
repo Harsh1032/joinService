@@ -11,7 +11,7 @@ const OurFounder = () => {
       <MaxWidthWrapper>
         {/* Title */}
         <h2 className="text-center text-3xl md:text-5xl font-semibold leading-tight">
-          The Mind Behind the Mission
+          The Founder’s Why
         </h2>
 
         {/* Card */}
@@ -31,35 +31,10 @@ const OurFounder = () => {
             {/* Copy */}
             <div className="md:col-span-7 flex flex-col gap-6 justify-center">
               <div className="max-w-[62ch]">
-                <h3 className="text-[#0B1B4A] font-extrabold text-lg md:text-xl tracking-normal">
-                  LOREM CONTENT 1
-                </h3>
-                <p className="mt-2 text-sm md:text-base leading-relaxed text-black/80">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
+                <p className="text-base md:text-lg leading-relaxed text-black/80">
+                  I faced many challenges as a stroke survivor during my rehab. I faced difference of opinion between specialist and GP. I forgot my medicine routine or was over confident of my ability to chew and swallow food or liquid. I forgot or missed my speech therapy and physio routine. It affected my morale, my confidence to bounce to a normal life. Will ever have one again? How normal would it be? The worse was the post stroke fatigue. It was debilitating yet there was no real advice or guidance. It was not coordinated at all. My daily living activity was affected. The goals of recovery were verbal and it didn't feel personalised. I had to change the medication based on my body's reaction against the GPs advice. I didn't go to the specialist because I was worried about the cost since I am not able to earn an income. I became dependant on my wife's sole effort in earning a salary to sustain our livelihood.
                 </p>
               </div>
-
-              <div className="max-w-[62ch]">
-                <h3 className="text-[#0B1B4A] font-extrabold text-lg md:text-xl tracking-normal">
-                  LOREM CONTENT 2
-                </h3>
-                <p className="mt-2 text-sm md:text-base leading-relaxed text-black/80">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-              </div>
-
-              <p className="max-w-[62ch] text-sm md:text-base leading-relaxed text-black/80">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
             </div>
           </div>
         </div>

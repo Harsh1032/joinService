@@ -12,71 +12,80 @@ const MissionVision = () => {
         {/* Eyebrow */}
         <div className="text-center">
           <span className="text-xs md:text-sm font-semibold tracking-wide text-[#2563EB] uppercase">
-            Our Mission & Vision
+            Our Solutions
           </span>
         </div>
 
         {/* Title */}
         <h2 className="mt-2 text-center text-3xl md:text-5xl font-semibold leading-tight text-[#0B0B0B]">
-          Quality, Integrity, and Experience
+          StrokeSMART for Every Stakeholder
         </h2>
 
-        {/* 3 Feature Cards */}
+        {/* 3 Solution Cards */}
         <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {/* QUALITY */}
+          {/* PATIENTS & FAMILIES */}
           <div className="rounded-xl bg-[#F8F8F8] border border-[#B7B7B7] p-6 md:p-8">
             <div className="flex items-center justify-center">
               <img
                 src="/icon11.png"
-                alt="Quality icon"
+                alt="Patients & Families icon"
                 className="w-16 h-16 object-contain"
               />
             </div>
             <h3 className="mt-4 text-center text-xl md:text-2xl font-extrabold tracking-wide text-[#0B1B4A]">
-              QUALITY
+              PATIENTS & FAMILIES
             </h3>
-            <p className="mt-3 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam.
+            <p className="mt-3 text-center text-sm md:text-base font-semibold text-[#2563EB] leading-relaxed">
+              StrokeSMART makes recovery at home trustworthy, guided and cheaper.
+            </p>
+            <p className="mt-2 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
+              StrokeSMART makes recovery at home trustworthy, guided and cheaper.
+StrokeSMART technology provides AI-powered SMART recovery plans, guided routines verified by experts, real-time dashboards and step by step support for families that make stroke rehab clearer, safer, and more effective — so survivors move closer to normal life without the guesswork.
+
             </p>
           </div>
 
-          {/* INTEGRITY */}
+          {/* CLINICIANS & ALLIED CARE */}
           <div className="rounded-xl bg-[#F8F8F8] border border-[#B7B7B7] p-6 md:p-8">
             <div className="flex items-center justify-center">
               <img
                 src="/icon12.png"
-                alt="Integrity icon"
+                alt="Clinicians & Allied Care icon"
                 className="w-16 h-16 object-contain"
               />
             </div>
             <h3 className="mt-4 text-center text-xl md:text-2xl font-extrabold tracking-wide text-[#0B1B4A]">
-              INTEGRITY
+              CLINICIANS & ALLIED CARE
             </h3>
-            <p className="mt-3 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam.
+            <p className="mt-3 text-center text-sm md:text-base font-semibold text-[#2563EB] leading-relaxed">
+              StrokeSMART gives you smarter tools for better care.
+            </p>
+            <p className="mt-2 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
+              StrokeSMART Technology turns rehab into AI-guided SMART goals you can track in real time specific to each patient.
+It goes beyond monitoring — it predicts risks, flags missed milestones, adjusts explainable care requirement, decision support and shares recovery dashboards with families and therapists. You get coordinated actionable insights, not more admin — reducing or preventing readmissions, giving you confidence in every decision and saving time.
+
             </p>
           </div>
 
-          {/* EXPERIENCE */}
+          {/* FUNDERS & PARTNERS */}
           <div className="rounded-xl bg-[#F8F8F8] border border-[#B7B7B7] p-6 md:p-8">
             <div className="flex items-center justify-center">
               <img
                 src="/icon13.png"
-                alt="Experience icon"
+                alt="Funders & Partners icon"
                 className="w-16 h-16 object-contain"
               />
             </div>
             <h3 className="mt-4 text-center text-xl md:text-2xl font-extrabold tracking-wide text-[#0B1B4A]">
-              EXPERIENCE
+              FUNDERS & PARTNERS
             </h3>
-            <p className="mt-3 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam.
+            <p className="mt-3 text-center text-sm md:text-base font-semibold text-[#2563EB] leading-relaxed">
+              StrokeSMART turns inefficiency into scalable impact.
+            </p>
+            <p className="mt-2 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
+              StrokeSMART turns inefficiency into scalable impact.
+StrokeSMART Technology is a scalable SaaS AI platform that reduces unnecessary hospital referrals, cuts care costs, and creates recurring revenue streams in Malaysia’s RM 1B+ rehab and homecare market — with expansion into Southeast Asia’s USD 100B aged care economy.
+
             </p>
           </div>
         </div>
@@ -95,21 +104,23 @@ const MissionVision = () => {
 
             {/* Text */}
             <div className="md:col-span-3 p-6 md:p-8">
-              <h3 className="text-lg md:text-xl font-extrabold tracking-wide text-[#0B1B4A]">
-                MISSION & VISION
+              <h3 className="text-lg md:text-xl font-extrabold tracking-wide text-[#0B1B4A] mb-4">
+                OUR VISION & MISSION
               </h3>
-              <p className="mt-3 text-sm md:text-base text-[#4B5563] leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <p className="mt-3 text-sm md:text-base text-[#4B5563] leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
+              
+              <div className="mb-4">
+                <h4 className="text-base md:text-lg font-bold text-[#2563EB] mb-2">Vision</h4>
+                <p className="text-sm md:text-base text-[#4B5563] leading-relaxed italic">
+                  A world where stroke survivors regain dignity and independence — supported by AI-driven collaboration between families, GPs, and care teams.
+                </p>
+              </div>
+              
+              <div>
+                <h4 className="text-base md:text-lg font-bold text-[#2563EB] mb-2">Mission</h4>
+                <p className="text-sm md:text-base text-[#4B5563] leading-relaxed italic">
+                  We make stroke recovery simpler and stronger through StrokeSMART technology — connecting patients, families, and providers with AI-supported decision-making and coordinated care pathways.
+                </p>
+              </div>
             </div>
           </div>
         </div>

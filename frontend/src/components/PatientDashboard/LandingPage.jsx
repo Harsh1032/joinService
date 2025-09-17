@@ -43,7 +43,7 @@ const landingPage = ({ isMenuOpen }) => {
               </div>
             <div className="flex flex-col gap-y-2 max-w-[40%] lg:mr-[10%]">
               <span className="text-[#00429E] lg:text-2xl text-lg font-medium">
-                Hi Puan Mariam!
+                Hi Finn McKenzie!
               </span>
               <p className="text-[#0349A9E3] font-normal lg:text-lg text-base">
                 Welcome to your patient dashboard! Here, you can easily view
@@ -78,12 +78,12 @@ const landingPage = ({ isMenuOpen }) => {
             </div>
             <div className="bg-[#CFE3FF] py-2 lg:px-4 px-2 flex flex-col gap-y-1 border-x-4 border-[#4D97FF]">
               <span className="text-[#00429E] lg:text-2xl text-lg font-medium">
-                Dr. Emily Harrington
+                Emily Harrington (Physiotherapist)
               </span>
               <span className="font-normal lg:text-lg text-base text-[#0349A9E3]">
-                1245 Pinebrook Avenue, Springfield, IL 62704
+                1245 Pinebrook Avenue, Adelaide, 5017
                 <br />
-                Glucose Level Test
+                Left Arm/ Left Leg Mobility Test based on StrokeSmart
               </span>
               <div className="flex items-center justify-between">
                 <div className="flex gap-x-2 items-center">
@@ -106,7 +106,7 @@ const landingPage = ({ isMenuOpen }) => {
                 Dr. Marcus Delgado
               </span>
               <span className="font-normal lg:text-lg text-base text-[#0349A9E3]">
-                7820 Willow Creek Drive, Austin, TX 78745                
+                7820 Willow Creek Drive, Adelaide, 5017
                 <br />
                 Blood Pressure Level Test
               </span>
@@ -140,10 +140,10 @@ const landingPage = ({ isMenuOpen }) => {
             </div>
             <div className="bg-[#FFDADA] py-2 px-4 flex flex-col gap-y-1 border-x-4 border-[#CB1111]">
               <span className="text-[#610101] lg:text-2xl text-lg font-medium">
-                GLUCOSE LEVEL TEST
+                BLOOD & GLUCOSE LEVEL TEST
               </span>
               <span className="font-normal lg:text-lg text-base text-[#610101E3]">
-                Severe, High Level, Prescribed Glucose Level
+                Severe, High Level, Prescribed Glucose Level, No Pills Prescribed
                 <br />
                 Dr. Olivia Bennett
               </span>
@@ -166,10 +166,10 @@ const landingPage = ({ isMenuOpen }) => {
             </div>
             <div className="bg-[#FFEBEB] py-2 px-4 flex flex-col gap-y-1 border-x-4 border-[#CB1111]">
               <span className="text-[#610101] lg:text-2xl text-lg font-medium">
-                2. BLOOD PRESSURE LEVEL TEST
+                MOBILITY TEST
               </span>
               <span className="font-normal lg:text-lg text-base text-[#610101A9]">
-                Very Good, No Pills Prescribed, Lorem Ipsum
+                Very good progress achieved week 6 StrokeSmart therapy goal.
                 <br />
                 Dr. Nathaniel Rhodes
               </span>

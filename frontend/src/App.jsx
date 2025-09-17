@@ -45,7 +45,7 @@ const App = () => {
     height="44px"                // keep this in sync with Navbar top below
     bg="#E8F1FF"                 // light blue
     color="#1E56D9"              // blue text
-    text="Connected Stroke Care. For Patients. For Families. For Life."
+    text="StrokeSMART is an AI-powered collaboration platform turning stroke rehab into measurable, affordable, and connected care for a better quality of life."
   />
 )}
 
