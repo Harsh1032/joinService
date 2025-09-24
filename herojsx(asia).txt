@@ -12,13 +12,13 @@ const Hero = () => {
           <div className="relative overflow-hidden rounded-2xl shadow-xl">
             <img
               src="image2.png"
-              alt="About StrokeSMART"
+              alt="About CareHub.asia"
               className="w-full h-full object-cover scale-[1.3]" 
             />
             {/* subtle overlay badge */}
             <div className="absolute top-5 left-5">
               <span className="inline-flex items-center rounded-md bg-[#4D97FF33] border border-[#4D97FF66] px-4 py-2 text-[#0050C1] text-sm font-semibold tracking-wide">
-                ABOUT StrokeSMART
+                ABOUT CAREHUB.ASIA
               </span>
             </div>
           </div>
@@ -26,11 +26,11 @@ const Hero = () => {
           {/* Right: Copy */}
           <div className="flex flex-col gap-6">
             <h2 className="text-4xl xl:text-5xl font-semibold leading-tight">
-              StrokeSMART
+              The Platform Behind StrokeSMART
             </h2>
 
             <p className="text-lg xl:text-xl text-black/80">
-              StrokeSMART reimagines ageing and rehabilitation with AI-powered
+              CareHub.asia reimagines ageing and rehabilitation with AI-powered
               insights, explainable algorithms, family-inclusive support, and
               connected care.
             </p>
@@ -42,9 +42,9 @@ const Hero = () => {
               </h3>
               <div className="mt-4 space-y-4 text-black/80">
                 <p>
-                  At StrokeSMART, we believe ageing and recovery should be
+                  At CareHub.asia, we believe ageing and recovery should be
                   personalised, preventive, and full of dignity. That’s why
-                  StrokeSMART is building a cloud-based hub for AI-driven home
+                  CareHub.asia is building a cloud-based hub for AI-driven home
                   and primary care solutions.
                 </p>
                 <p>
@@ -125,13 +125,13 @@ const Hero = () => {
         <div className="lg:hidden flex flex-col gap-5">
           <div className="flex justify-center">
             <span className="inline-flex items-center rounded-md bg-[#4D97FF33] border border-[#4D97FF66] px-3 py-1.5 text-[#0050C1] text-xs font-semibold tracking-wide">
-              ABOUT STROKESMART
+              ABOUT CAREHUB.ASIA
             </span>
           </div>
 
           <img
             src="image3.png"
-            alt="About StrokeSMART"
+            alt="About CareHub.asia"
             className="w-full rounded-xl object-cover"
           />
 

@@ -70,7 +70,8 @@ const Navbar = ({ offsetTop = "0px" }) => {
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-8">
               <NavItem to="/#top">Home</NavItem>
-              <NavItem to="/#pricing">Pricing</NavItem>
+              <NavItem to="/plans">Asia Pricing</NavItem>
+              <NavItem to="/#pricing">Plans & Pricing</NavItem>
               <NavItem to="/services">Find Services</NavItem>
               <NavItem to="/joinservices">Join Services</NavItem>
               <NavItem to="/#aboutUs">About us</NavItem>
@@ -78,8 +79,8 @@ const Navbar = ({ offsetTop = "0px" }) => {
 
               <div className="ml-4 h-6 w-px bg-slate-200" />
 
-              <OutlineBtn to="/patientDashboard">Patient Dashboard</OutlineBtn>
-              <SolidBtn to="/serviceProviderDashboard">Service Dashboard</SolidBtn>
+              <OutlineBtn to="/patientDashboard">Patient</OutlineBtn>
+              <SolidBtn to="/serviceProviderDashboard">Clinician</SolidBtn>
             </div>
 
             {/* Mobile toggle */}
@@ -105,8 +106,8 @@ const Navbar = ({ offsetTop = "0px" }) => {
 
               <div className="h-0.5 bg-slate-100 my-1" />
 
-              <OutlineBtn to="/patientDashboard">Patient Dashboard</OutlineBtn>
-              <SolidBtn to="/serviceProviderDashboard">Service Dashboard</SolidBtn>
+              <OutlineBtn to="/patientDashboard">Patient</OutlineBtn>
+              <SolidBtn to="/serviceProviderDashboard">Clinician</SolidBtn>
             </div>
           </div>
         )}

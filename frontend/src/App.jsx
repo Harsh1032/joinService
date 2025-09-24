@@ -19,15 +19,21 @@ import RejectApplications from "./components/AdminDashboard/RejectApplications";
 
 import ScrollToHash from "./components/ScrollToHash";
 
+// ✅ import your new Plans page
+import Plans from "./components/Plans";
+
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   const isPatientDashboard = location.pathname.startsWith("/patientDashboard");
   const isPersonalizePLan = location.pathname.startsWith("/personalizePlan");
-  const isServiceProviderDashboard = location.pathname.startsWith("/serviceProviderDashboard");
+  const isServiceProviderDashboard = location.pathname.startsWith(
+    "/serviceProviderDashboard"
+  );
   const isAdminDashboard = location.pathname.startsWith("/adminDashboard");
-  const isAdminRejectApplication = location.pathname.startsWith("/adminRejectApplication");
+  const isAdminRejectApplication =
+    location.pathname.startsWith("/adminRejectApplication");
 
   const isPublic =
     !isAdminDashboard &&
@@ -38,17 +44,16 @@ const App = () => {
 
   return (
     <div className="w-full font-bagoss min-h-screen bg-[#D9D9D94F]">
-      {/* Show marquee only on public pages; move it if you want it global */}
+      {/* Show marquee only on public pages */}
       {isPublic && (
-  <MarqueeBanner
-    sticky
-    height="44px"                // keep this in sync with Navbar top below
-    bg="#E8F1FF"                 // light blue
-    color="#1E56D9"              // blue text
-    text="StrokeSMART is an AI-powered collaboration platform turning stroke rehab into measurable, affordable, and connected care for a better quality of life."
-  />
-)}
-
+        <MarqueeBanner
+          sticky
+          height="44px"
+          bg="#E8F1FF"
+          color="#1E56D9"
+          text="StrokeSMART is an AI-powered collaboration platform turning stroke rehab into measurable, affordable, and connected care for a better quality of life."
+        />
+      )}
 
       {isAdminDashboard || isAdminRejectApplication ? (
         <AdminNavbar />
@@ -65,6 +70,10 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/joinServices" element={<JoinServices />} />
+        
+        {/* ✅ New Plans route */}
+        <Route path="/plans" element={<Plans />} />
+
         <Route
           path="/patientDashboard"
           element={<PatientDashboard isMenuOpen={isMenuOpen} />}

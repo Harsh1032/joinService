@@ -9,10 +9,44 @@ const OurFounder = () => {
       className="scroll-mt-[88px] md:scroll-mt-[96px] py-10 md:py-16 bg-white"
     >
       <MaxWidthWrapper>
+        {/* Wide Mission & Vision Card */}
+        <div className="mt-5 md:mt-6 rounded-xl bg-[#F8F8F8] border border-[#B7B7B7] overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-5">
+            {/* Image */}
+            <div className="md:col-span-2">
+              <img
+                src="/mission.jpg" /* replace with your image path */
+                alt="Mission & Vision"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Text */}
+            <div className="md:col-span-3 p-6 md:p-8">
+              <h3 className="text-lg md:text-xl font-extrabold tracking-wide text-[#0B1B4A] mb-4">
+                OUR VISION & MISSION
+              </h3>
+              
+              <div className="mb-4">
+                <h4 className="text-base md:text-lg font-bold text-[#2563EB] mb-2">Vision</h4>
+                <p className="text-sm md:text-base text-[#4B5563] leading-relaxed italic">
+                  A world where stroke survivors regain dignity and independence — supported by AI-driven collaboration between families, GPs, and care teams.
+                </p>
+              </div>
+              
+              <div>
+                <h4 className="text-base md:text-lg font-bold text-[#2563EB] mb-2">Mission</h4>
+                <p className="text-sm md:text-base text-[#4B5563] leading-relaxed italic">
+                  We make stroke recovery simpler and stronger through StrokeSMART technology — connecting patients, families, and providers with AI-supported decision-making and coordinated care pathways.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* Title */}
-        <h2 className="text-center text-3xl md:text-5xl font-semibold leading-tight">
-          The Founder’s Why
-        </h2>
+<h2 className="mt-12 md:mt-16 text-center text-3xl md:text-5xl font-semibold leading-tight">
+  The Founder’s Why
+</h2>
 
         {/* Card */}
         <div className="mt-8 md:mt-12 rounded-2xl border border-[#B7B7B7] bg-[#F8F8F8] shadow-sm">
