@@ -13,7 +13,7 @@ const Hero = () => {
             <img
               src="image2.png"
               alt="About StrokeSMART"
-              className="w-full h-full object-cover scale-[1.3]" 
+              className="w-full h-full object-cover scale-[1.3]"
             />
             {/* subtle overlay badge */}
             <div className="absolute top-5 left-5">
@@ -29,99 +29,163 @@ const Hero = () => {
               StrokeSMART
             </h2>
 
+            {/* top intro line (short) */}
             <p className="text-lg xl:text-xl text-black/80">
-              StrokeSMART reimagines ageing and rehabilitation with AI-powered
-              insights, explainable algorithms, family-inclusive support, and
-              connected care.
+              StrokeSMART reimagines post-stroke rehabilitation with{" "}
+              <strong>AI-powered insights</strong>,{" "}
+              <strong>explainable algorithms</strong>, and{" "}
+              <strong>family-inclusive support</strong>.
             </p>
 
-            {/* Highlight card */}
+            {/* About card */}
             <div className="rounded-2xl bg-white shadow-sm border border-black/5 p-6">
-              <h3 className="text-xl font-semibold">
-                Why Our AI Is Different — It’s Explainable and Transparent
-              </h3>
+              <h3 className="text-xl font-semibold">About StrokeSMART</h3>
               <div className="mt-4 space-y-4 text-black/80">
                 <p>
-                  At StrokeSMART, we believe ageing and recovery should be
-                  personalised, preventive, and full of dignity. That’s why
-                  StrokeSMART is building a cloud-based hub for AI-driven home
-                  and primary care solutions.
+                  <strong>StrokeSMART</strong> reimagines ageing and
+                  rehabilitation with <strong>AI-powered insights</strong>,{" "}
+                  <strong>explainable algorithms</strong>, and{" "}
+                  <strong>family-inclusive support</strong>.
                 </p>
                 <p>
-                  <strong>StrokeSMART</strong>, our first feature, is an
-                  AI-supported rehab and collaboration tool helping stroke
-                  survivors, families, allied health providers, and clinicians
-                  work together for better outcomes.
+                  It’s more than technology — it’s a movement to make recovery{" "}
+                  <strong>connected, measurable, and dignified</strong>.
+                  StrokeSMART bridges the gap between hospitals, home care, and
+                  therapy <strong>teams</strong> by turning data into decisions
+                  everyone can trust.
                 </p>
                 <p>
-                  Ageing and recovery should be empowering — not confusing.
-                  StrokeSMART Technology uses explainable AI — algorithms
-                  designed to make their reasoning clear.
+                  Built in collaboration with{" "}
+                  <strong>
+                    stroke survivors, families, doctors, therapists, and
+                    caregivers
+                  </strong>
+                  , StrokeSMART’s AI learns from real-world use to continuously
+                  improve care. Every insight is transparent, every
+                  recommendation explainable, and every outcome shared —
+                  empowering both clinicians and families to act early and
+                  confidently.
+                </p>
+                <p>
+                  StrokeSMART sets the foundation for a broader ecosystem of
+                  intelligent recovery and aged-care solutions —{" "}
+                  <strong>scalable across Australia and Southeast Asia</strong>.
                 </p>
               </div>
             </div>
 
-            {/* Two-column detail */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-xl bg-white shadow-sm border border-black/5 p-5">
-                <h4 className="font-semibold text-[#0050C1]">
-                  For Clinicians & Therapists
-                </h4>
-                <p className="mt-2 text-black/80">
-                  Dashboards highlight which factors (e.g., age, mobility
-                  progress, therapy adherence) influence each patient’s recovery
-                  score — making it easier to validate and trust
-                  recommendations.
+            {/* Why our AI is different */}
+            <div className="rounded-2xl bg-white shadow-sm border border-black/5 p-6">
+              <h3 className="text-xl font-semibold">
+                Why Our AI Is Different — It’s Explainable, Transparent, and
+                Empowering
+              </h3>
+              <div className="mt-4 space-y-4 text-black/80">
+                <p>
+                  StrokeSMART’s AI is designed for{" "}
+                  <strong>trust and empowerment — not confusion</strong>. Every
+                  recommendation is explainable: clinicians can see what factors
+                  drive each insight, and families can understand the “why”
+                  behind every care decision.
+                </p>
+                <p>
+                  Built with input from{" "}
+                  <strong>
+                    stroke survivors, families, doctors, therapists, and
+                    caregivers
+                  </strong>
+                  , our models evolve with real-world use — translating clinical
+                  data into <strong>actions and impact</strong>, not algorithms.
+                </p>
+                <p>
+                  <strong>Result:</strong> more confident decisions, earlier
+                  interventions, and measurable recovery outcomes — at home,
+                  where recovery truly happens.
                 </p>
               </div>
+            </div>
+
+            {/* Two-column detail (order matches your screenshot) */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              {/* Patients & Families (left) */}
               <div className="rounded-xl bg-white shadow-sm border border-black/5 p-5">
                 <h4 className="font-semibold text-[#0050C1]">
                   For Patients & Families
                 </h4>
-                <p className="mt-2 text-black/80">
-                  Insights are translated into plain language: “Your improvement
-                  score is high because you’ve been consistent with therapy, and
-                  caregiver engagement is strong.”
-                </p>
+                <div className="mt-2 text-black/80 space-y-3">
+                  <p>
+                    StrokeSMART translates complex rehab data and insights into
+                    plain, compassionate language.
+                  </p>
+                  <p>Families can see why recovery is improving — for example:</p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>
+                      “Your improvement score is high (7/10) because you’ve been
+                      consistent with therapy, and caregiver engagement is
+                      strong. Let’s aim for 8/10 over the next 3 days. Just
+                      follow the SMART goals on your dashboard.”
+                    </li>
+                    <li>
+                      “This clarity builds trust, motivation, and hope — helping
+                      survivors regain confidence and independence at home.”
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Care Teams & Clinicians (right) */}
+              <div className="rounded-xl bg-white shadow-sm border border-black/5 p-5">
+                <h4 className="font-semibold text-[#0050C1]">
+                  Care Teams & Clinicians
+                </h4>
+                <div className="mt-2 text-black/80 space-y-3">
+                  <p>
+                    StrokeSMART gives every care professional — from GPs and
+                    therapists to caregivers and hospital staff — one shared,
+                    trusted view of recovery progress.
+                  </p>
+                  <p>
+                    Dashboards highlight which factors (e.g., age, mobility
+                    progress, therapy adherence) influence each patient’s
+                    recovery score, making it easier to validate insights,
+                    increase coordination, and trust recommendations.
+                  </p>
+                  <p>
+                    <strong>The result:</strong> less admin, faster decisions,
+                    and more time for care that truly matters.
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Assurances */}
+            {/* Roadmap */}
             <div className="rounded-xl bg-white shadow-sm border border-black/5 p-5">
-              <p className="text-black/80">
-                Even as our models grow smarter (e.g., using medical images or
-                sensor data), we’ll keep explanations simple and visual — showing
-                what data points mattered most. We co-design with real doctors
-                and therapists so predictions reflect clinical wisdom, not just
-                data. Every recommendation is backed by clear reasoning you can
-                understand and act on.
-              </p>
-              <p className="mt-3 font-medium">
-                The result: Better decisions you can trust, care plans you
-                understand, and outcomes everyone can see improving.
-              </p>
-            </div>
-
-            {/* Future vision */}
-            <div className="rounded-xl bg-white shadow-sm border border-black/5 p-5">
-              <h4 className="font-semibold">Our future vision</h4>
+              <h4 className="font-semibold">Our Roadmap</h4>
               <ul className="mt-2 space-y-2 text-black/80 list-disc pl-5">
-                <li>Add modules for diabetes, dementia, and chronic care.</li>
                 <li>
-                  Partner across Southeast Asia to make connected care the norm.
+                  Add modules for <strong>diabetes, dementia, and chronic care</strong> —
+                  expanding beyond stroke.
                 </li>
                 <li>
-                  Use ethical data & predictive analytics to prevent crises
-                  before they happen.
+                  Partner across <strong>Southeast Asia</strong> to make
+                  connected care the norm.
+                </li>
+                <li>
+                  Use <strong>ethical data</strong> and{" "}
+                  <strong>predictive analytics</strong> to prevent crises before
+                  they happen.
                 </li>
               </ul>
+              {/* optional italic footer line from screenshot
+              <p className="mt-3 italic text-black/60">
+                (StrokeSMART is just the beginning — each new module strengthens CareNex’s AI position as Southeast Asia’s most trusted, AI-driven home and primary care ecosystem.)
+              </p>
+              */}
             </div>
-
-            
           </div>
         </div>
 
-        {/* MOBILE / SMALL (unchanged) */}
+        {/* MOBILE / SMALL (unchanged shell; update copy later if you want parity) */}
         <div className="lg:hidden flex flex-col gap-5">
           <div className="flex justify-center">
             <span className="inline-flex items-center rounded-md bg-[#4D97FF33] border border-[#4D97FF66] px-3 py-1.5 text-[#0050C1] text-xs font-semibold tracking-wide">
@@ -135,7 +199,7 @@ const Hero = () => {
             className="w-full rounded-xl object-cover"
           />
 
-          {/* ... rest of mobile content unchanged ... */}
+          {/* ...rest of mobile content unchanged... */}
         </div>
       </MaxWidthWrapper>
     </div>

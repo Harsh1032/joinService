@@ -12,7 +12,7 @@ const MissionVision = () => {
         {/* Eyebrow */}
         <div className="text-center">
           <span className="text-xs md:text-sm font-semibold tracking-wide text-[#2563EB] uppercase">
-            Our Solutions
+            StrokeSMART Solutions
           </span>
         </div>
 
@@ -20,6 +20,10 @@ const MissionVision = () => {
         <h2 className="mt-2 text-center text-3xl md:text-5xl font-semibold leading-tight text-[#0B0B0B]">
           StrokeSMART for Every Stakeholder
         </h2>
+        {/* Subtitle */}
+        <p className="mt-2 text-center text-sm md:text-base text-[#4B5563]">
+          One Platform, Multiple Stakeholders
+        </p>
 
         {/* 3 Solution Cards */}
         <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -36,34 +40,40 @@ const MissionVision = () => {
               PATIENTS & FAMILIES
             </h3>
             <p className="mt-3 text-center text-sm md:text-base font-semibold text-[#2563EB] leading-relaxed">
-              StrokeSMART makes recovery at home trustworthy, guided and cheaper.
+              From Confusion to Clarity
             </p>
             <p className="mt-2 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
-              StrokeSMART makes recovery at home trustworthy, guided and cheaper.
-StrokeSMART technology provides AI-powered SMART recovery plans, guided routines verified by experts, real-time dashboards and step by step support for families that make stroke rehab clearer, safer, and more effective — so survivors move closer to normal life without the guesswork.
-
+              StrokeSMART turns post-stroke recovery into guided, step-by-step care.
+              AI-powered SMART goals, verified by clinicians, show families exactly
+              what to do each day — reducing stress, hospital visits, and costs while
+              improving confidence in recovery.
             </p>
           </div>
 
-          {/* CLINICIANS & ALLIED CARE */}
+          {/* Care Teams & Clinicians */}
           <div className="rounded-xl bg-[#F8F8F8] border border-[#B7B7B7] p-6 md:p-8">
             <div className="flex items-center justify-center">
               <img
                 src="/icon12.png"
-                alt="Clinicians & Allied Care icon"
+                alt="Care Teams & Clinicians icon"
                 className="w-16 h-16 object-contain"
               />
             </div>
             <h3 className="mt-4 text-center text-xl md:text-2xl font-extrabold tracking-wide text-[#0B1B4A]">
-              CLINICIANS & ALLIED CARE
+              Care Teams & Clinicians
             </h3>
             <p className="mt-3 text-center text-sm md:text-base font-semibold text-[#2563EB] leading-relaxed">
-              StrokeSMART gives you smarter tools for better care.
+              From Overload to Insightful, Explainable Care
             </p>
             <p className="mt-2 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
-              StrokeSMART Technology turns rehab into AI-guided SMART goals you can track in real time specific to each patient.
-It goes beyond monitoring — it predicts risks, flags missed milestones, adjusts explainable care requirement, decision support and shares recovery dashboards with families and therapists. You get coordinated actionable insights, not more admin — reducing or preventing readmissions, giving you confidence in every decision and saving time.
-
+              StrokeSMART Technology turns stroke rehab into AI-guided SMART goals
+              that clinicians can track in real time for each patient. It monitors —
+              predicts risks, flags missed milestones, and adjusts care plans
+              dynamically based on patient progress. Each recommendation is clear
+              and explainable — showing which factors drive every insight. Shared
+              dashboards connect families, therapists, and GPs in one view — cutting
+              admin, preventing readmissions, and helping care teams act with
+              confidence.
             </p>
           </div>
 
@@ -80,17 +90,18 @@ It goes beyond monitoring — it predicts risks, flags missed milestones, adjust
               FUNDERS & PARTNERS
             </h3>
             <p className="mt-3 text-center text-sm md:text-base font-semibold text-[#2563EB] leading-relaxed">
-              StrokeSMART turns inefficiency into scalable impact.
+              From System Strain to Scalable Impact
             </p>
             <p className="mt-2 text-center text-sm md:text-base text-[#4B5563] leading-relaxed">
-              StrokeSMART turns inefficiency into scalable impact.
-StrokeSMART Technology is a scalable SaaS AI platform that reduces unnecessary hospital referrals, cuts care costs, and creates recurring revenue streams in Malaysia’s RM 1B+ rehab and homecare market — with expansion into Southeast Asia’s USD 100B aged care economy.
-
+              StrokeSMART is a subscription-based scalable SaaS AI platform that
+              turns inefficiency into measurable value. It reduces unnecessary hospital
+              readmissions, lowers rehabilitation costs, and transforms home-based
+              stroke care into recurring, scalable revenue — starting with Australia’s
+              A$9 billion stroke-related economic burden, and expanding across
+              Southeast Asia’s USD 100 billion ageing and home-care economy.
             </p>
           </div>
         </div>
-
-        
       </MaxWidthWrapper>
     </section>
   );
