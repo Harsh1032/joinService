@@ -11,43 +11,43 @@ const slides = [
   {
     eyebrow: "Patients & Families",
     painPointHeadline: "Why Recovery Feels Impossible (for Most Families)",
-    headline: "Stroke recovery, made simpler — and stronger.",
+    headline: "Stroke recovery, made simpler and stronger.",
     sub: "AI-guided plans, expert-verified routines, real-time dashboards, and step-by-step support that restore confidence to survivors and families.",
     painPoints: [
-      "We felt lost after leaving the hospital — there was no clear plan.",
-      "Rehab was confusing — every provider said something different.",
+      "We felt lost after leaving the hospital there was no clear plan.",
+      "Rehab was confusing every provider said something different.",
       "Costs kept piling up, but outcomes didn't improve."
     ],
     cta: { label: "Solution", href: "#mission" },
-    quote: "Designed with stroke survivors, families, and clinicians — powered by explainable AI.",
-    image: "/image.png" // Add image path for this slide
+    quote: "Designed with stroke survivors, families, and clinicians powered by explainable AI.",
+    image: "/image.png"
   },
   {
     eyebrow: "Care Teams & Clinicians",
     painPointHeadline: "When Care Teams Can't Connect, Patients Pay the Price",
     headline: "Smarter tools. Better care decisions. Connected.",
-    sub: "StrokeSMART helps clinicians and allied teams track SMART goals, predict risks, and flag missed milestones — all while sharing dashboards that unify patients, families, and care partners in one view.",
+    sub: "StrokeSMART helps clinicians and allied teams track SMART goals, predict risks, and flag missed milestones while sharing dashboards that unify patients, families, and care partners in one view.",
     painPoints: [
       "I don't have time to track every stroke patient's progress.",
-      "Care is fragmented — families don't update me, therapists work in silos.",
+      "Care is fragmented families don't update me, therapists work in silos.",
       "I want to prevent readmissions, but I don't get the right data at the right time."
     ],
     cta: { label: "Solution", href: "#mission" },
-    quote: "Co-designed with clinicians, therapists, and caregivers — built to make recovery smarter and more connected.",
-    image: "/imagee.png" // Add image path for this slide
+    quote: "Co-designed with clinicians, therapists, and caregivers built to make recovery smarter and more connected.",
+    image: "/imagee.png"
   },
   {
     eyebrow: "Funders & Partners",
     painPointHeadline: "The Billion-Dollar Problem in Stroke Care",
     headline: "Turning healthcare challenges into high-growth opportunities.",
-    sub: "StrokeSMART is a scalable SaaS AI platform that cuts referrals, lowers costs, and turns home recovery into measurable outcomes and recurring revenue — starting in Australia's A$9B stroke market and expanding across Southeast Asia's USD100B ageing economy.",
+    sub: "StrokeSMART is a scalable SaaS AI platform that cuts referrals, lowers costs, and turns home recovery into measurable outcomes and recurring revenue starting in Australia's A$9B stroke market and expanding across Southeast Asia's USD100B ageing economy.",
     painPoints: [
       "Stroke care remains one of the most expensive and least efficient areas of healthcare.",
       "Billions are spent, yet outcomes remain inconsistent and difficult to measure."
     ],
     cta: { label: "Solution", href: "#mission" },
     quote: "Driving better care, stronger economics, and sustainable health impact.",
-    image: "/imageee.png" // Add image path for this slide
+    image: "/imageee.png"
   }
 ];
 
@@ -57,9 +57,8 @@ const ImageSlider = () => {
   const swiperRef = useRef(null);
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] lg:h-[800px] xl:h-[900px]">
-      {/* Background image will be handled per slide */}
-      
+    <div className="relative w-full min-h-[620px] md:h-[700px] lg:h-[800px] xl:h-[900px]">
+      {/* Desktop nav buttons stay */}
       <button
         ref={prevRef}
         aria-label="Previous slide"
@@ -103,46 +102,46 @@ const ImageSlider = () => {
       >
         {slides.map((s, i) => (
           <SwiperSlide key={i}>
-            {/* Individual background for each slide */}
+            {/* background */}
             <div className="absolute inset-0 -z-20">
               <img
                 src={s.image}
                 alt={`Background for ${s.eyebrow}`}
-                className="w-full h-full object-cover scale-y-[1.09]"
+                className="w-full h-full object-cover md:scale-y-[1.09]"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/45" />
             </div>
 
-            <div className="h-full w-full flex items-center relative z-10">
-              <div className="w-full max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
+            {/* content */}
+            <div className="w-full h-full flex md:items-center">
+              <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-14 sm:py-16 md:py-0">
                 <div className="max-w-4xl text-white">
-                  <div className="inline-block bg-blue-600/90 px-4 py-2 rounded-full mb-6">
-                    <p className="text-sm md:text-base font-bold uppercase tracking-wider text-white">
+                  <div className="inline-block bg-blue-600/90 px-4 py-2 rounded-full mb-5 sm:mb-6">
+                    <p className="text-sm md:text-base font-bold tracking-wider text-white uppercase">
                       {s.eyebrow}
                     </p>
                   </div>
 
-                  <div className="mb-8">
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
+                  <div className="mb-6 sm:mb-8">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-yellow-400 leading-tight drop-shadow-lg">
                       {s.painPointHeadline}
                     </h2>
                   </div>
 
-                  <div className="relative bg-gradient-to-r from-red-600/95 to-red-700/95 backdrop-blur-sm border-2 border-red-300/50 rounded-2xl p-8 md:p-10 mb-10 shadow-2xl overflow-hidden">
+                  <div className="relative bg-gradient-to-r from-red-600/95 to-red-700/95 backdrop-blur-sm border-2 border-red-300/50 rounded-2xl p-6 sm:p-8 md:p-10 mb-8 md:mb-10 shadow-2xl overflow-hidden max-h-[260px] sm:max-h-[320px] md:max-h-none md:overflow-visible">
                     <div className="absolute inset-0 opacity-10">
                       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent" />
                     </div>
-
                     <div className="relative z-10">
-                      <h3 className="text-xl md:text-2xl font-bold text-white mb-6 flex items-center">
-                        <span className="w-2 h-8 bg-yellow-400 rounded-full mr-4" />
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 flex items-center gap-3">
+                        <span className="w-2 h-8 bg-yellow-400 rounded-full" />
                         Current Pain Points:
                       </h3>
-                      <div className="space-y-5">
+                      <div className="space-y-4 sm:space-y-5 overflow-y-auto md:overflow-visible">
                         {s.painPoints.map((point, idx) => (
                           <p
                             key={idx}
-                            className="text-lg md:text-xl text-white font-semibold leading-relaxed italic"
+                            className="text-base sm:text-lg md:text-xl text-white font-semibold leading-relaxed italic pr-2"
                           >
                             "{point}"
                           </p>
@@ -151,25 +150,25 @@ const ImageSlider = () => {
                     </div>
                   </div>
 
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white">
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 md:mb-6 text-white">
                     {s.headline}
                   </h1>
 
-                  <p className="text-lg md:text-xl text-white/90 mb-10 leading-relaxed">
+                  <p className="text-base sm:text-lg md:text-xl text-white/90 mb-7 md:mb-10 leading-relaxed">
                     {s.sub}
                   </p>
 
-                  <div className="mb-8">
+                  <div className="mb-6 md:mb-8">
                     <a
                       href={s.cta.href}
-                      className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 text-xl font-bold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
+                      className="inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl font-bold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
                     >
                       {s.cta.label}
                     </a>
                   </div>
 
                   <div>
-                    <p className="text-lg font-medium text-blue-200 italic">
+                    <p className="text-base sm:text-lg font-medium text-blue-200 italic">
                       {s.quote}
                     </p>
                   </div>
@@ -194,6 +193,11 @@ const ImageSlider = () => {
         }
         .swiper-pagination-bullet:hover {
           background: rgba(255,255,255,0.8); transform: scale(1.1);
+        }
+        @media (max-width: 767px) {
+          .swiper-pagination {
+            bottom: 16px !important;
+          }
         }
       `}</style>
     </div>
