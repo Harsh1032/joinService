@@ -39,8 +39,7 @@ const Footer = () => {
             <hr className="text-white w-[80%] mx-auto lg:hidden" />
           </div>
 
-          <div className="flex flex-col gap-y-4 p-5 max-lg:text-center">
-            <span className="text-2xl font-normal text-[#AFAFAF]">Pages</span>
+          <div className="flex flex-col gap-y-4 p-5 max-lg:text-center">            
             <div className="flex lg:flex-row flex-col lg:justify-between lg:mt-3 lg:gap-x-8">
               <div className="flex flex-col lg:gap-y-5 gap-y-2">
                 {/* HOME */}
